@@ -1,0 +1,578 @@
+---
+title: 'Lab 1: Descriptive Statistics and Graphs'
+author: "Dr. Jiacheng Cai"
+date: "2023-07-09"
+output:
+  pdf_document:
+    toc: yes
+  html_document:
+    toc: yes
+    toc_float: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE,message=FALSE)
+
+library(dplyr)
+library(ggplot2)
+library(ggpubr)
+library(flextable)
+library(tidyr)
+```
+
+# Your Name: JJ McCauley
+
+# Packages Needed
+
+In Lab 0, we mentioned that many experts have created some function/data packages for R. With appropriate packages, we can directly call the useful function to achieve our statistical goals.
+
+In this lab, we are going to use the following five packages. Your lab computer should have the following packages installed already, but in the case it does not, we need download and install them into our local R. To do that, copy the following lines (one line per time) to the "Console" window (left-bottom), then hit Enter.
+
+install.packages("dplyr")
+
+install.packages("ggplot2")
+
+install.packages("ggpubr")
+
+install.packages("flextable")
+
+install.packages("tidyr")
+
+After that, go to the very first R chunk of this file, click run to open the packages.
+
+**The install.packages will download and install the package to your R Studio. After the package is installed, we don't need to install it again every time. So just run for ONE TIME. We don't need to run that codes for the future.**
+
+You can load the necessary packages by the code "library(package name)", which has been done at the beginning of the Markdown file.
+
+# Introduction
+
+In the Lab 0, we have learned the fundamental concepts of R programming: objects, functions, and data. In particular, we have learned how to read a data set into R, and obtain some particular subset of the data set by some conditions.
+
+In today's lab, we will learn how to obtain the numerical and graphical summary of the data set: **descriptive statistics and graphs**.
+
+We will use the following data set for our practice today: A medical researcher wants to study the effects of various factors on pulse rates. The researcher records the height, weight, gender, smoking preference, activity level, and resting pulse rate of 92 undergraduate students. The researcher then randomly divides the students into two groups. The first group runs in place for a minute while the other group stands still. Then, the researcher records the students' pulse rates again.
+
+Let's first read the data into R. First, make sure that your data file "Pulse.csv" is in the same folder of this R markdown file.
+
+Recall the function read.csv. We would like to store the data into an object called "data1". To insert a R block into the R markdown file, we type \`\`\`{r}.
+
+```{r}
+data1 <- read.csv("Pulse.csv")
+```
+
+You should be able to see the object "data1" appeared on the right-top part. You can double click the object "data1" to see the details of the data set.
+
+In this data set, there are 8 variables:
+
+-   Pulse1: The resting pulse of each student
+-   Pulse2: The pulse after running or not running for each student (after treatment)
+-   Ran: Whether or not the student ran in place: 1=Yes or 2=No (treatment)
+-   Smokes: Whether or not the student smokes regularly: 1=Yes or 2=No
+-   Sex: The biological characteristics of males or females of the student: 1=M or 2=F
+-   Height: The height of the student, in inches
+-   Weight: The weight of the student, in pounds
+-   Activity: The usual activity level of the student: 1=Slight, 2=Moderate, or 3=A lot
+
+In today's lab, we will focus on the variables: Height, Weight, Sex, and Smokes of these students. We will learn how to obtain the numerical and graphical summaries of those variables (and pairs of some of those variables), and see what those summaries tell us.
+
+# Part I: Descriptive Statistics
+
+In this part, we will learn how to obtain the numerical summary, or **descriptive statistics** of one variable in the data set. Let's take Height as an example.
+
+First, use the knowledge of Lab 0, obtain an object called "Height" that represent the variable "Height" in data1.
+
+```{r}
+Height <- data1$Height
+```
+
+Let's first get some summary of this column. The function used is "summary".
+
+```{r}
+summary(Height)
+```
+
+You can see the summary function with a quantitative column input will show the minimum, maximum, mean, median, first quartile, and third quartile.
+
+What if we just want to find the mean, or median, or any one of the above descriptive statistics?
+
+```{r}
+length(Height)
+min(Height)
+max(Height)
+mean(Height)
+median(Height)
+quantile(Height)
+quantile(Height,0.25)
+quantile(Height,0.75)
+
+```
+
+How about the variance and standard deviation of the column Height?
+
+```{r}
+sd(Height)
+var(Height)
+```
+
+Now, I want to put the above results in a nice table. First, I want to create a list that contains the above statistics. I put them into the order: N (number of data points), min, firstQ (for first quantile), median, thirdQ, max, mean, StDev, and Var. The corresponding function is:
+
+list(column1name=column1value, column2name=column2value,...)
+
+Then, I transform the list into a particular data format in R: data frame. The function is
+
+as.data.frame(object)
+
+Finally, I put the data frame into an object called "HeightSummary".
+
+```{r}
+HeightSummary <- as.data.frame(
+  list(N=length(Height),
+       min=min(Height),
+       firstQ=quantile(Height,0.25),
+       median=median(Height),
+       thirdQ=quantile(Height,0.75),
+       max=max(Height),
+       mean=round(mean(Height),3),
+       StDev=round(sd(Height),3),
+       Var=round(var(Height),3)))
+```
+
+Next, I want to put that into a nice table. I use the function flextable, and use function set_caption to add a title "Descriptive Statistics of Height" to this table. Finally, I can save it into a word file "HeightSummary.docx" in the same folder with this R markdown file.
+
+```{r}
+
+HeightSummary <- flextable(HeightSummary) 
+HeightSummary <- set_caption(HeightSummary, "Descriptive Statistics of Height - Your Name")
+
+HeightSummary
+
+save_as_docx(HeightSummary, path="HeightSummary.docx")
+
+```
+
+Do you need to repeat all the above codes every time we want to obtain the descriptive statistics? The answer is no. We can define a **function** that stores all the above codes, and use the data column we want to summarize as an input.
+
+We give a name "DesStat" to this function.
+
+```{r}
+as.data.frame(data1)
+
+DesStat <- function(datacol, title){
+  datasummary <- as.data.frame(
+    list(N=length(datacol),
+         min=min(datacol),
+         firstQ=quantile(datacol,0.25),
+         median=median(datacol),
+         thirdQ=quantile(datacol,0.75),
+         max=max(datacol),
+         mean=round(mean(datacol),3),
+         StDev=round(sd(datacol),3),
+         Var=round(var(datacol),3)))
+  
+  
+  datasummary<-flextable(datasummary) 
+  datasummary<-set_caption(datasummary, title)
+  
+  save_as_docx(datasummary, path=paste(title,".docx"))
+  datasummary
+}
+
+
+```
+
+Now, we can run the function using Height as the input. We also use "Descriptive Statistics - Height - Your name" as the second input (the title of the summary table).
+
+```{r}
+
+DesStat(Height, "Descriptive Statistics - Height - JJ")
+```
+
+## Inputting a data set with list:
+
+In some cases, we may need to input the data manually in R. Let's see how we can do that using **list:**
+
+```         
+listname <- c(data1,data2,...,datan)
+```
+
+Let's try to create a list with data 11,13,16,16,26,30,31,37. Then use the DesStat function to get the descriptive statistics.
+
+```{r}
+
+list1 <- c(11,13,16,16,26,30,31,37)
+
+DesStat(list1,"Descriptive Statistics for Input Data")
+
+```
+
+## Assignment 1
+
+1.  Create an object called "Weight" that contains the column "Weight" in data 1.
+
+    ```{r}
+    Weight <- data1$Weight
+    ```
+
+2.  Obtain the descriptive statistics (N, min, firstQ, median, thirdQ, max, mean, StDev, var) of "Weight", and present them in a nice table "WeightSummary", whose title is "Descriptive Statistics of Weight - Your Name". Finally, save the table to a word file called "WeightSummary.docx".
+
+    ```{r}
+    library(flextable)
+    as.data.frame(data1)
+
+    DesStat <- function(datacol, title){
+      data1Summary <- as.data.frame(
+        list(N=length(datacol),
+             min=min(datacol),
+             firstQ=quantile(datacol,0.25),
+             median=median(datacol),
+             thirdQ=quantile(datacol,0.75),
+             max=max(datacol),
+             mean=round(mean(datacol),3),
+             StDev=round(sd(datacol),3),
+             Var=round(var(datacol),3)))
+      
+      
+      data1Summary<-flextable(data1Summary) 
+      data1Summary<-set_caption(data1Summary, title)
+      
+      save_as_docx(data1Summary, path=paste("WeightSummary.docx"))
+      data1Summary
+    }
+    DesStat(Weight, "Descriptive Statistics of Weight - JJ McCauley")
+    ```
+
+3.  Given a data set with values: 105, 184, 120, 130, 122, 167, 155, 201, 192, find the descriptive statistics.
+
+    ```{r}
+    list2 <- c(05, 184, 120, 130, 122, 167, 155, 201, 192)
+    DesStat(list2, "Descriptive Statistics for List 2 - JJ McCauley")
+    ```
+
+**End of Assignment 1**
+
+Recall in Lab 0, we have learned how to obtain a subset of data that satisfies some condition. Here, I want to obtain the Heights of all male students, and store it to the object called "MHeight".
+
+Before we perform such operations, we want to change the value 1 to "Male" and value 2 to "Female" in the data1. To do that, we use the following operations:
+
+data1\$name of column to change value[condition] \<- new value
+
+```{r}
+data1$Sex[data1$Sex==1]<-'Male'
+data1$Sex[data1$Sex==2]<-'Female'
+
+```
+
+Now, let's create the object "MHeight". Recall the code in Lab 0
+
+data1[row condition, ]\$column
+
+```{r}
+
+MHeight <- data1[data1$Sex=="Male",]$Height
+
+```
+
+Then, we can perform the calculations of descriptive statistics (same as what we did for "Height", just need to change the corresponding object from "Height" to "MHeight").
+
+## Assignment 2
+
+1.  Obtain the descriptive statistics (N, min, firstQ, median, thirdQ, max, mean, StDev, var) of "MHeight", and present them in a nice table "MHeightSummary", whose title is "Descriptive Statistics of Males Height - Your Name". Finally, save the table to a word file called "MHeightSummary.docx".
+
+    ```{r}
+    library(flextable)
+    as.data.frame(MHeight)
+
+    DesStat <- function(datacol, title){
+      MHeightSummary <- as.data.frame(
+        list(N=length(datacol),
+             min=min(datacol),
+             firstQ=quantile(datacol,0.25),
+             median=median(datacol),
+             thirdQ=quantile(datacol,0.75),
+             max=max(datacol),
+             mean=round(mean(datacol),3),
+             StDev=round(sd(datacol),3),
+             Var=round(var(datacol),3)))
+      
+      
+      MHeightSummary<-flextable(MHeightSummary) 
+      MHeightSummary<-set_caption(MHeightSummary, title)
+      
+      save_as_docx(MHeightSummary, path=paste("MHeightSummary.docx"))
+      MHeightSummary
+    }
+    DesStat(MHeight, "Descriptive Statistics of Males Height - JJ McCauley")
+    ```
+
+2.  Create objects called "FHeight", "MWeight", and "FWeight" that represent the females' height, males' weight, and females' weight, respectively.
+
+    ```{r}
+    FHeight <- data1[data1$Sex=="Female",]$Height
+    MWeight <- data1[data1$Sex=="Male",]$Weight
+    FWeight <- data1[data1$Sex=="Female",]$Weight
+    ```
+
+3.  Repeat task 1 for these objects.
+
+    ```{r}
+    library(flextable)
+
+    #Making the table for Female's Height
+    as.data.frame(FHeight)
+
+    DesStat <- function(datacol, title){
+      FHeightSummary <- as.data.frame(
+        list(N=length(datacol),
+             min=min(datacol),
+             firstQ=quantile(datacol,0.25),
+             median=median(datacol),
+             thirdQ=quantile(datacol,0.75),
+             max=max(datacol),
+             mean=round(mean(datacol),3),
+             StDev=round(sd(datacol),3),
+             Var=round(var(datacol),3)))
+      
+      
+      FHeightSummary<-flextable(FHeightSummary) 
+      FHeightSummary<-set_caption(FHeightSummary, title)
+      
+      save_as_docx(FHeightSummary, path=paste("FHeightSummary.docx"))
+      FHeightSummary
+    }
+    DesStat(FHeight, "Descriptive Statistics of Females Height - JJ McCauley")
+
+
+    #Making the table for Male's Weight
+    as.data.frame(MWeight)
+
+    DesStat <- function(datacol, title){
+      MWeightSummary <- as.data.frame(
+        list(N=length(datacol),
+             min=min(datacol),
+             firstQ=quantile(datacol,0.25),
+             median=median(datacol),
+             thirdQ=quantile(datacol,0.75),
+             max=max(datacol),
+             mean=round(mean(datacol),3),
+             StDev=round(sd(datacol),3),
+             Var=round(var(datacol),3)))
+      
+      
+      MWeightSummary<-flextable(MWeightSummary) 
+      MWeightSummary<-set_caption(MWeightSummary, title)
+      
+      save_as_docx(MWeightSummary, path=paste("MWeightSummary.docx"))
+      MWeightSummary
+    }
+    DesStat(MWeight, "Descriptive Statistics of Males Weight - JJ McCauley")
+
+
+    #Making the table for Male's Weight
+    as.data.frame(FWeight)
+
+    DesStat <- function(datacol, title){
+      FWeightSummary <- as.data.frame(
+        list(N=length(datacol),
+             min=min(datacol),
+             firstQ=quantile(datacol,0.25),
+             median=median(datacol),
+             thirdQ=quantile(datacol,0.75),
+             max=max(datacol),
+             mean=round(mean(datacol),3),
+             StDev=round(sd(datacol),3),
+             Var=round(var(datacol),3)))
+      
+      
+      FWeightSummary<-flextable(FWeightSummary) 
+      FWeightSummary<-set_caption(FWeightSummary, title)
+      
+      save_as_docx(FWeightSummary, path=paste("FWeightSummary.docx"))
+      FWeightSummary
+    }
+    DesStat(FWeight, "Descriptive Statistics of Females Weight - JJ McCauley")
+    ```
+
+**End of Assignment 2**
+
+The last part of the descriptive statistics is about the frequency. For example, one may be interested in the most frequent heights of the students, and how many students have these height.
+
+To do that, I may need to do multiple operations on the object data 1: I first need to call the data 1, then I need to group the data 1 base on the height (put all rows with the same height value into one group), then count the number of rows in each group (each height value).
+
+To simply to code, we use the "pipe" or "chain" operator "%\>%".
+
+First, we will do it on the object data 1, then next, use %\>% to the next operation. In the second operation, we want to group the data 1 by Height, use "**group_by(Height)**". Then next %\>%, we count the number of rows in each group, use "summarise(Count=n())". Finally, store the result in an object "HeightCount".
+
+After that, we present the result in a nice table using "flextable", then as the result in a word document called "HeightCount.docx".
+
+```{r}
+
+HeightCount <- data1 %>% group_by(Height) %>%
+  summarise(Count=n())
+HeightCount <- flextable(HeightCount)
+HeightCount <- set_caption(HeightCount, "Frequency Table of Height - Dr Cai")
+HeightCount
+save_as_docx(HeightCount,path="HeightCount.docx")
+
+```
+
+In particular, we can do the grouping by multiple layers. For example, first group by Sex, then in each Sex, group by Height.
+
+```{r}
+SexHeightCount <- data1 %>% group_by(Sex, Height) %>%
+  summarise(Count=n())
+SexHeightCount <- flextable(SexHeightCount)
+SexHeightCount <- set_caption(SexHeightCount, "Frequency Table of Height/Sex - Your Name")
+SexHeightCount
+save_as_docx(SexHeightCount,path="SexHeightCount.docx")
+```
+
+## Assignment 3
+
+Mimic the above codes, find the frequency tables for grouping by weight and grouping by (Sex, Weight). Store the results in two word documents "WeightCount.docx" and "SexWeightCount.docx". Make sure your name is on the title of each table.
+
+```{r}
+#Getting Weight Count
+WeightCount <- data1 %>% group_by(Weight) %>% summarise(Count=n())
+WeightCount <- flextable(WeightCount)
+WeightCount <- set_caption(WeightCount, "Frequency Table of Weight - JJ")
+WeightCount
+save_as_docx(WeightCount, path="WeightCount.docx")
+
+#Getting Sex Weight Count
+SexWeightCount <- data1 %>% group_by(Sex, Weight) %>% summarise(Count=n())
+SexWeightCount <- flextable(SexWeightCount)
+SexWeightCount <- set_caption(SexWeightCount, "Frequency Table of Weight/Sex - JJ")
+SexWeightCount
+save_as_docx(SexWeightCount, path="SexWeightCount.docx")
+```
+
+**End of Assignment 3**
+
+# Part II: Graphs for Quantitative Variables
+
+Up to this point, we have learned how to obtain and summarize the descriptive statistics for data. Sometimes we prefer to summarize the data graphically. In this section, we will focus on obtaining the graphs for Quantitative Variables.
+
+R has a very powerful packages "ggplot2" that allows the users to create various statistical graphs for data visualiztion.
+
+The simplest template for using ggplot is giving as follows:
+
+```         
+ggplot(data=data object, aes(aesthetic mapping))+
+  geom_function(properties)+
+  other options, such as scale, theme, labels, etc.
+```
+
+For example, use "data=data1" to load the pulse data set into the gglot function. Use "aes(x=Height)" to focus on the column "Height" in data1. We want to plot the histogram, then use "geo_histogram" as the geom function. Look at the values of the Height data, we may want to choose binwidth=1. We can also define the color of boundaries and fill for the histogram. Put those into the properties.
+
+The resulting histogram for the Height of all students is thus given by:
+
+```{r}
+
+ggplot(data1, aes(x=Weight))+
+  geom_histogram(binwidth=5,color="black", fill="lightblue")
+```
+
+We can also present the histograms of Heights for Male and Female students in the same graph with different colors. We define a function "HistWithGroups"
+
+```{r}
+
+HistWithGroups <- function(data,xcol,xname,group,gname,bwidth){
+  ggplot(data, aes(x=xcol,fill=group))+
+    geom_histogram(aes(y=..density..),color="black",binwidth=bwidth,alpha=0.6, position="identity")+
+    scale_y_continuous(labels=scales::percent_format())+
+    xlab(xname)+
+    scale_fill_discrete(name=gname)
+  
+}
+```
+
+Now, we use this function to plot the comparing histograms for Height with different Sex
+
+```{r}
+HistWithGroups(data1,data1$Height,"Height",data1$Sex,"Sex",1)
+
+
+```
+
+## Assignment 4
+
+Mimic the above codes, find the histogram of Weight for all students, and comparing histograms of Weight for Male and Female students. Please use binwidth=5 for the weight data.
+
+```{r}
+#Function for creating historgrams comparing weight for male and female students
+HistWithGroups <- function(data,xcol,xname,group,gname,bwidth){
+  ggplot(data, aes(x=xcol,fill=group))+
+    geom_histogram(aes(y=..density..),color="black",binwidth=bwidth,alpha=0.6, position="identity")+
+    scale_y_continuous(labels=scales::percent_format())+
+    xlab(xname)+
+    scale_fill_discrete(name=gname)
+  
+}
+
+#Calling Function
+HistWithGroups(data1,data1$Weight,"Weight",data1$Sex,"Sex",5)
+```
+
+**End of Assignment 4**
+
+# Part III: Information from Summaries
+
+Now, we can use the summaries we obtained above to answer the following questions:
+
+## Assignment 5
+
+Answer the following questions:
+
+1.  What is the mean (average) height and weight of the Statistics Students?
+
+    ```         
+    Mean Height: 68.72
+    Mean Weight: 145.152
+    ```
+
+2.  What is the mean (average) height and weight of the male and female Statistics Students?
+
+    ```         
+    Mean Height
+      Males: 70.754 inches
+      Females: 65.4 inches
+    Mean Weight
+      Males: 158.263 lbs
+      Females: 123.8 lbs
+    ```
+
+3.  What are the most frequent heights and weights of the students?
+
+    ```         
+    Most Frequent Height: 68/69 inches
+    Most Frequent Weight: 150/155 lbs
+    ```
+
+4.  How many students have these heights and weights?
+
+    ```         
+    Number of 69 inch Students: 10
+    Number of 150/155 lb Students: 10
+    ```
+
+5.  What are the most frequent heights and weights of the Female students, and how many female students have these heights and weights?
+
+    ```         
+    Most Frequent
+      Height for Female Students: 68 inches
+      Weight for Female Students: 125 lbs
+    ```
+
+6.  By looking at the histogram what can be said about the heights and weights of the students? Does this agree with the results you found from the frequency tables?
+
+    ```         
+    The histograms depict that the height with the highest frequency is around 69 inches, with the minimum frequency around 61 inches. The histogram additionally depicts that the maximum frequency in weight is around 155 lbs with a minimum frequency around 95-100lbs and around 215 lbs. These results agree with those found in the frequency tables. 
+    ```
+
+7.  By looking at the histograms, what can be said about the heights and weights of females and males?
+
+    ```         
+    By looking at the histograms, it can be said Males are most frequently around 155 lbs and 73 inches. Additionally, it can be said that Females are most frequently around 120 lbs and 68 inches. Additionally, it can be said that females and males share weight the most at 150 lbs and share height the most around 69 inches.
+    ```
+
+**End of Assignment 5**
