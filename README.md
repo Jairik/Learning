@@ -1,2 +1,2 @@
 # Learning R
- Tracking my progesss with learning that language R
+Tracking my progess for implementing statistical thinking into R
