@@ -192,7 +192,7 @@ plotHistogramAndOverlayDistribution(uniform_sample_2)
 
 ```
 
-```{}
+```         
 ```
 
 ### Assignment 1
@@ -200,15 +200,19 @@ plotHistogramAndOverlayDistribution(uniform_sample_2)
 Now Take three samples from the uniform distribution $dU(1,30)$ but this time make the sample size 1000. Create histograms for each sample and overlay the distribution.
 
 ```{r}
-# Defining a function to easily plot the histogram and overlay the distribution
+#Defining a function to easily plot the histogram and overlay the distribution
 plotHistogramAndOverlayDistribution <- function(uniform_sample) {
-  a <- 1
-  b <- 30
-  x_uniform <- seq(a, b, length = 1000)
-  y_uniform <- dunif(x_uniform, min = a, max = b)
-  hist(uniform_sample, breaks = c(1, 6, 11, 16, 21, 26, 30), xlim = c(1, 30), freq = FALSE)
-  lines(x_uniform, y_uniform, col = "blue", lwd = 2)
+  a<-1
+  b<-30
+  x_uniform<-seq(a,b, length=b)
+  y_uniform<- dunif(x_uniform,min=a,max=b)
+  hist(uniform_sample, breaks=c(1,6,11,16,21,26,30),xlim=c(1,30))
+  
+  for (i in 1:30){
+    segments(i,0,i,1/(b-a), lwd=2)
+  }
 }
+
 
 #Obtaining a sample of 1000 random data points
 uniform_sample_3<-rdunif(1000,1,30)
@@ -236,6 +240,7 @@ plotHistogramAndOverlayDistribution(uniform_sample_5)
 Discuss how the histograms of the samples of size 100 and 1000 compare to the actual distribution of dU(1,30):
 
 ```         
+Although both of these random samples show similarities to the actual distribution of dU(1,30), the larger sample size of 1000 proved to consistently be a surperior representation to the actual distribution.
 ```
 
 **End Assignment 1**
@@ -293,6 +298,7 @@ for (i in 1:length(p)){plot(x,dbinom(x,n,p[i]),type="h",main=substitute(paste("n
 Describe the distributions as skewed left, symmetric or skewed right for the different values of *p.* For what values of *p* is the distribution approximately symmetric? For what values of p is the distribution skewed right?
 
 ```         
+When the value of p is within .35-.65, the distribution is approximately symmetric. When p is less than .35, the graph becomes more skewed right. When p is greater than .65, the graph becomes more skewed left.
 ```
 
 Now lets practice finding some probabilities from the binomial distribution with n=36 and p=.35:
@@ -300,19 +306,24 @@ Now lets practice finding some probabilities from the binomial distribution with
 Find $P(X \geq 17)$
 
 ```{r}
-
-
+#Find the probability when X is within 17 and 1000000
+Binom_plotter(36,0.35,17,1000000)
 ```
 
 Find $P(X \geq 17.4)$ and $P(X \geq 17.6)$
 
 ```{r}
+#Find the probability when X is within 17.4 and 1000000
+Binom_plotter(36,0.35,17.4,1000000)
 
+#Find the probability when X is within 17.6 and 1000000
+Binom_plotter(36,0.35,17.6,1000000)
 ```
 
 Is there any difference in the late 2 probabilities? why or why not?
 
 ```         
+There is no difference between 17.4 and 17.6. This is because a binomial distribution only considers integers, therefore rounding both 17.4 and 17.6 up to the nearest integer (18). This would result in having the same probability.
 ```
 
 **End Assignment 2**
@@ -329,7 +340,7 @@ rpois(n,lambda)-Which generates a random sample from the Poisson distribution
 
 dpois(x,lambda)-generates $P(X=x)$ for the Poisson distribution
 
-ppois(q,lambda)- calculates $P(X\leq x)$ for a Poisson distribution.
+ppois(q,lambda)- calculates $P(X\leq q)$ for a Poisson distribution.
 
 qpois(p,lambda)- This gives the x value such that $P(X \leq x)=p$ for a Poisson distribution.
 
@@ -338,17 +349,67 @@ qpois(p,lambda)- This gives the x value such that $P(X \leq x)=p$ for a Poisson 
 suppose $\lambda=2.2$ Find $P(X>3)$ and $P(2.2< X < 5.1)$
 
 ```{r}
+#Defining Lambda
+Lambda <- 2.2
+#Declaring Strings to clean up print statements
+string_p1 <- "P(x>3): "
+string_p2 <- "P(2.2<X<5.1): "
 
+#Getting probability that X>3
+p1 <- 1 - ppois(3, lambda)
+print(paste(string_p1, p1))
 
+#Getting the probability that 2.2<x<5.1
+p2 <- (ppois(5.1, lambda) - ppois(2.2, lambda))
+print(paste(string_p2, p2))
+
+#Additional Testing
+cat("\n") #Making a new line
+print("Now trying .1, 1, 3, 4, 5, 7, 10")
+cat("\n")
+Lambdas <- c(.1, 1, 2, 3, 4, 5, 7, 10)
+for (i in Lambdas) {
+  print(paste("-----", i, "-----"))
+  #Getting probability that X>3
+  p1 <- 1 - ppois(3, i)
+  print(paste(string_p1, p1))
+  cat("\n")
+  
+  #Getting the probability that 2.2<x<5.1
+  p2 <- (ppois(5.1, i) - ppois(2.2, i))
+  print(paste(string_p2, p2))
+  cat("\n")
+  cat("\n")
+}
 ```
 
 Now experiment with the parameter $\lambda$ like we did for p in the binomial distribution above. for what values of $\lambda$ is the distribution right-skewed?
 
 ```{r}
+#Declaring a list of Lambdas that we will check
+Lambdas <- c(.1, 2, 3, 4, 5, 6, 12, 20, 30, 75, 100, 125, 150)
 
+#Defining a function that, given a lambda, will generate a random sample and plot the points on a histogram
+plot_Poisson_Distribution <- function(lambda) {
+  x <- rpois(1000, lambda) #Generates random sample of poisson distribution
+  
+  #Fix an issue with the breaks
+  data_range <- range(x)
+  breaks <- seq(floor(data_range[1]), ceiling(data_range[2]))
+  
+  #Plot on a histogram
+  hist(x, breaks = breaks, xlim=c(1,50), main = paste("Poisson Distribution (λ =", lambda, ")"), xlab = "Value of X", ylab = "Frequency")
+}
+
+
+#Call the function for each lambda
+for (i in Lambdas) {
+  plot_Poisson_Distribution(i)
+}
 ```
 
 ```         
+When looking at the histograms, it appears as if the poisson distribution right-skewed when lambda is smaller, clearly showcasing being right-skewed when testing from 1-20. However, as Lambda becomes larger, the poisson distribution begins to become more symmetric.
 ```
 
 **End Assignment 3**
@@ -361,18 +422,39 @@ In the file titled Samples2.csv there are three columns of data that come from t
 
 ```{r}
 
-data0 <- read.csv("Samples2.csv")
+data0 <- read.csv("Samples (1).csv")
 
 hist(data0$Sample_1)
+print("Sample 1: ")
+summary(data0$Sample_1)
 
+print("Sample 2: ")
 hist(data0$Sample_2)
+summary(data0$Sample_2)
 
+print("Sample 3: ")
 hist(data0$Sample_3)
+summary(data0$Sample_3)
 
+# Generate random samples to compare to
+uniform_sample <- rdunif(1000, 0, 20)
+binomial_sample <- rbinom(1000, 50, 0.6)
+poisson_sample <- rpois(1000, lambda = 10)
+
+# Plot histograms for each sample
+hist(uniform_sample, main = "Uniform Distribution")
+hist(binomial_sample, main = "Binomial Distribution")
+hist(poisson_sample, main = "Poisson Distribution")
 
 ```
 
 ```         
+When summarizing the columns and looking at the histograms, deductions can be made. Firstly, sample 3 is skewed right and is more closely bounded (with a max of 10), leaving me to believe that it is a Pois(10). Nextly, sample 1 is dealing in discrete values and has somewhat even quartiles. This would push me to believe that it is a uniform distribution. However, sample 2 is dealing with continuous values, therefore sample 1 must be a binomial distribution. This leaves sample 2 to be a uniform distribution, which is still believeable due to it's quartiles being somewhat similar. 
+
+In Summary
+  Sample 1: Bin(50,.6)
+  Sample 2: dU(0,20)
+  Sample 3: Pois(10)
 ```
 
 **End Assignment 4**
