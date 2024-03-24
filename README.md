@@ -1,2 +1,2 @@
-# Learning R
-Tracking my progess for implementing statistical thinking into R
+# Learning
+Miscellaneous files I use for learning different important concepts/ languages.
