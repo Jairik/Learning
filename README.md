@@ -1,2 +1,3 @@
-# Learning
-Miscellaneous files I use for learning different important concepts/ languages.
+# Misc. Schoolwork
+
+Some of the more interesting schoolwork that I have done.
