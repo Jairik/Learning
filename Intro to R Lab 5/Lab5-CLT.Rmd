@@ -226,7 +226,6 @@ Sampling Distribution
 When the sample size is 100, the mean of x bar is 1.135, which is very close to the mean of x, 1.134. The standard deviation of x bar is .06, which is exactly equal to the standard deviation of x/sqrt(n). This graph appears to not quite be a normal distribution, with normal deviations falling outside of the tolerable range in the QQ plot.
 
 7) As the sample size increases, the gap between the mean of x bar and the mean of x closes. The same can be said about the standard deviation of x bar and the standard deviation of x/sqrt(n). Additionally, the curve appeared to be more of a normal distribution as n approached 30, however became less of one when n was 100.
-
 ```
 
 Population Distribution
@@ -244,9 +243,10 @@ Sampling Distribution
 
 5) The mean of x bar is .772, which is close to the mean of x, .769 . The standard deviation of bar, .067, is also fairly close to the standard deviation of x/sqrt(n), .069 . The plots suggest that this is still left-skewed.
 
-6) 
+6) When the sample size is 30, the mean of x bar is .768, which is very close to the mean of x, .769 . The standard deviation of x bar is .028, which is exactly the standard deviation of x/sqrt(n), .28 . The histogram appears to be in a roughly bell-like shape, with the qq plot agreeing with small but tolerable deviations.
+When the sample size is 100, the mean of x bar is .771, while the mean of x is close, being .769 . The standard deviation of x bar, .016, is very close to the standard deviation of x/sqrt(n), .015 . These plots appear to be slighly left skewed, with the qq plot having significant deviations torwards the left point of the center line.
 
-7) 
+7) The sample size influences the gap between the mean of x and x bar, and the standard deviation between x bar and x/sqrt(n). As the sample size increases, these seem to get closer together. The same applies to it's state as a normal distribution, however it appears to have peak similarities when the sample size is 30.
 ```
 
 Population Distribution
@@ -260,19 +260,19 @@ Sampling Distribution
 ```         
 ### Bimodel Pop Distribution
 
-3) The mean is  and the standard distribution is  . Since both are finite, it satisfies conditions 1 and 2. However, this is not a normal distribution, so a sample size of sufficiently large size (genrally 30 or greater) is required to meet this condition.
+3) The mean is .501 and the standard distribution is 2.959 . Since both are finite, it satisfies conditions 1 and 2. However, this is not a normal distribution, so a sample size of sufficiently large size (genrally 30 or greater) is required to meet this condition.
 
-5) 
+5) The mean of x bar is .62 and the mean of x is .498, so these two are not very similar. The standard deviation of x bar is 1.321, which is close to the standard deviation of x/sqrt(n) of 1.323 . This graph does not quite represent a normal distribution, with large deviations occuring in the QQ plot and the histogram having multiple peaks.
 
-6)
+6) When the sample size is 30, the mean of x bar is .47 and the mean of x is .498, which is somewhat close. On the other hand, the standard deviation of x bar, .537, and the standard deviation of x/sqrt(n), .54, is fairly close. These plots does not support a perfect normal distribution, potentially showcasing an extremely rough one. This histogram has multiple peaks and the QQ plot has fairl significant deviations, although only the top/bottom few are very significant.
+When the sample size is 100, the mean of x bar is .472 while the mean of x is .498, which is not very similar. The standard deviation of x bar is .301, while the standard deviation of x/sqrt(n) is .296, which is somewhat close. This graph does look fairly similar to a normal distribution, with the histogram following a bell-shaped curve and the QQ plot only showing slight deviations.
 
-7) 
-
+7) As the sample size increases, the gap between the means of x bar and x close, the gap between the standard deviations of x bar and x/sqrt(n) close, and the distributions become more normal.
 ```
 
 Population Distribution
 
-![Bimodel](pop_bimodel.png)
+![Bimodal](pop_bimodal.png)
 
 Sampling Distribution
 
@@ -292,6 +292,15 @@ Set the Population Distribution to "Cauchy". Then Answer all questions in Assign
 
 ```         
 ### Cauchy Pop Distribution
+
+3) Both the mean and standard deviations are undefined, violating conditions 1 and 2. This is also not a normal distribution, violating condition 3a. However, if the sample size is sufficiently large (approximately above 30), then condition 3b could hold true.
+
+5) When the sample size is 5, the mean of x bar is -1.194, while the mean of x is .042. These two are very different. Similarly, the standard deviation of x bar is 15.159, while the standard deviation of x/sqrt(n) is 77.963, which are completely different. This graph also does not follow a normal distribution at all, with the histogram showing one extreme peak and a large skewedness. Additionally, the qq plot shows extremely significant deviations.
+
+6) When the sample size size 30, the mean of x bar is -.691, while the mean of x is .042. Similarly to the previous sample size, these are very different. Similarly, the standard deviation of x bar is 14.822, which is very different than the standard deviation of x/sqrt(n), 31.828 . This graph is not a normal distribition at all for the same reasons as the previous example (question #5).
+When the sample size is 100, the mean of x bar is .738 while the mean of x is .042, which is not close. The standard deviation of x bar is 19.082, which is not very close to the standard deviation of x/sqrt(n), 17.433 . For similar reasons of the last two samples, these plots to not support a normal distribution.
+
+7) As the sample size increases, the gap between the means of x bar and x close, the gap between the standard deviations of x bar and x/sqrt(n) close, and the distributions become more normal, although it may require a very large sample size to acheive an actual normal distribuition (if possible at all).
 ```
 
 Population Distribution
@@ -314,14 +323,29 @@ So, what can we do when assumption 1 and/or 2 are not satisfied? Interestingly, 
 
 3.  For each selected sample size, download the histogram and QQ-plot, then insert below.
 
+Samples: ![Cauchy Sampling Distribution](sample_median_cauchy_10.png) ![Cauchy Sampling Distribution](sample_median_cauchy_10qq.png)
+
+![Cauchy Sampling Distribution](sample_median_cauchy_50.png) ![Cauchy Sampling Distribution](sample_median_cauchy_50qq.png)
+
+![Cauchy Sampling Distribution](sample_median_cauchy_100.png) ![Cauchy Sampling Distribution](sample_median_cauchy_100qq.png)
+
+![Cauchy Sampling Distribution](sample_median_cauchy_300.png) ![Cauchy Sampling Distribution](sample_median_cauchy_300qq.png)
+
 4.  For each selected sample size, compare the "mean of samp_median" and "median of x" on the histogram. Then check if the "Ratio of 2nd and 6th line" are approximately equal to each others for different sample size. What is your observations.
 
     ```         
+    When the sample size is 10, the mean of samp_median is .032 while the median of x is .001, which is dissimular. The ratio of 2nd and 6th line is 1.755.
+    When the sample size is 50, the mean of samp_median is .017 while the median of x is .001, which is somewhat similar. The ratio of 2nd and 6th line is 1.655.
+    When the sample size is 100, the mean of samp_median is .003 while the median of x is .001, This is fairly similar. The ratio of 2nd and 6th line is 1.66.
+    When the sample size is 300, the mean of samp_median is -.001 while the median of x is .001, which is similar. The ratio of 2nd and 6th line is 1.559.
+
+    As the sample sizes increased, the gaps between the mean of samp_median and the median of x were reduced immensely. Additionally, the Ratio of 2nd and 6th line stayed approximately the same throughout the different samples, slowly decreasing as the sample sizes got larger.
     ```
 
 5.  For each selected sample size, is the sampling distribution of sample median approximately normal? How does the sample size increasing affect the normality approaching?
 
     ```         
+    The sampling distributions were all approximately normal, with each distribution becoming closer to a normal distribution as the sample size increased.
     ```
 
 **End of Assignment 5**
