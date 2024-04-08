@@ -1,4 +1,5 @@
 package com.example.multiplycalculator;
+/* MVC - MODEL CLASS */
 
 /* Acts as the model in the MVC Design Pattern, holding relevant
 data and logic for calculations */

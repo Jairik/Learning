@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+/* MVC- CONTROLLER CLASS */
 
 /* This file acts as the Controller to the MVC Pattern, communicating between the GUI
 and the model class */
@@ -19,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     Model model = new Model(); //Creating Model Object
     String reset = "1"; //The initial value when clearing the calculator
 
+    //Pre-made function by Android Studio
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    /* I am experiencing an exception somewhere in here that is crashing app */
     public void OnClickMultiply(View view) {
         //Getting the bottom total text to later modify
         TextView totalTextBox = (TextView) findViewById(R.id.total);
@@ -65,6 +66,5 @@ public class MainActivity extends AppCompatActivity {
 
         //Set the total in the GUI to 1 (the new total)
         totalTextBox.setText(reset);
-
     }
 }
