@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import java.math.BigInteger;
 /* MVC- CONTROLLER CLASS */
 
 /* This file acts as the Controller to the MVC Pattern, communicating between the GUI
@@ -48,10 +50,10 @@ public class MainActivity extends AppCompatActivity {
             inputValue = 1;
         }
         //Getting the total from the model
-        int total = model.multiply(inputValue);
+        BigInteger total = model.multiply(inputValue);
 
         //Converting total to a String to set text
-        String totalString = Integer.toString(total);
+        String totalString = total.toString();
 
         //Setting the value of totalTextBox to total
         totalTextBox.setText(totalString); //setting as inputText for testing
