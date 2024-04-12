@@ -12,6 +12,8 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+Name: JJ McCauley
+
 # Introduction
 
 Our goal in statistics in general is to estimate the value of an unknown population parameters, such as a population mean (like average income) or a proportion from a binomial population (proportion of unemployed people). The unknown population parameter (e.g. mean or proportion) that we are interested in estimating is called the **target parameter**.
@@ -112,16 +114,22 @@ First, about the **standard deviation known or not**. Recall that if the populat
 
 2.  Go to tab "Confidence Interval - Sample Mean". Save the plot to the same folder of this R Markdown file (name it as "assignment1_2.png"), and insert that plot below.
 
+![CI .95 - Normal Distribution n = 30](assignment1_2.png)
+
 3.  Based on the above results, what is the proportion of confidence intervals covering the true population mean? What is the average width of these confidence intervals? Do the widths of these confidence intervals equal to each other?
 
     ```         
+    The proportion of intervals covering the true population mean is .95, with the average width of intervals being .716. These widths are not equal.
     ```
 
 4.  Now keep all the other input the same, change the Population Variance Known to "No". Save the plot to the same folder of this R Markdown file (name it as "assignment1_4.png"), and insert that plot below.
 
+![CI .95 - Normal Distribution n = 30 PopVar = Not Known](assignment1_4.png)
+
 5.  What is the proportion of confidence intervals covering the true population mean? What is the average width of these confidence intervals? Do the widths of these confidence intervals equal to each other? Explain why if there is a difference between 2 and 3.
 
     ```         
+    The proportion of intervals covering the true population mean is .93, with the average width of intervals being .75592. Similarly to last time, these widths are not equal. When the population variance is unknown, the proportion of intervals covering the true population mean decreased and the widths of the intervals increased. This likely occurs because the graph must take the uncertainty of the population into account.
     ```
 
 **End of Assignment 1**
@@ -130,19 +138,43 @@ Next, about the **Confidence Coefficient**
 
 ## Assignment 2
 
-1.  Set the Population Distribution as "Normal", Pop Variance Known as "No", Confidence Coefficient as "0.80", Sample Size as "40", Nmber of Samples as "100".
+1.  Set the Population Distribution as "Normal", Pop Variance Known as "No", Confidence Coefficient as "0.80", Sample Size as "40", Number of Samples as "100".
 
 2.  Go to "Confidence Interval - Sample Mean", download the figure and post it below.
+
+![Confidence Interval Normal CC = .8 n = 40](CI_Sample_Mean_Normal_.8_40.png)
 
 3.  Based on the result, what is the proportion of CIs that cover the true mean? What is the average width of CIs?
 
     ```         
+    The proportion of CIs that cover the true mean is .81, while the average width of confidence interals is .41202.
     ```
 
 4.  Repeat question 2,3, but for different confidence coefficients "0.85", "0.90", "0.95", "0.99", respectively.
 
-    ```         
-    ```
+![Confidence Interval Normal CC = .85 n = 40](CI_Sample_Mean_Normal_.85_40.png)
+
+```         
+The proportion of CIs that cover the true mean is .84, while the average width of confidence interals is .46686.
+```
+
+![Confidence Interval Normal CC = .90 n = 40](CI_Sample_Mean_Normal_.90_40.png)
+
+```         
+The proportion of CIs that cover the true mean is .90, while the average width of confidence interals is .53558.
+```
+
+![Confidence Interval Normal CC = .95 n = 40](CI_Sample_Mean_Normal_.95_40.png)
+
+```         
+The proportion of CIs that cover the true mean is .94, while the average width of confidence interals is .643.
+```
+
+![Confidence Interval Normal CC = .99 n = 40](CI_Sample_Mean_Normal_.99_40.png)
+
+```         
+The proportion of CIs that cover the true mean is .98, while the average width of confidence interals is .86094.
+```
 
 5.  Now, based on the above results, use the technique in Part 0, create a table that contains three columns: "Coefficient Coefficient" with values 0.80, 0.85, 0.90, 0.95, 0.99; "Prop of CIs cover True Mean" with values you observed in the previous steps; "Ave Width of CIs" with values you observed in the previous steps. Then add a title "CIs from Normal Pop - Different Confidence Coefficients - Sample Size 40". Present the R codes and the table below:
 
