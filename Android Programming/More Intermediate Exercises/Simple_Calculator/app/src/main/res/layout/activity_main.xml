@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#6D6D6D"
+    tools:context=".MainActivity">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="8dp"
+        android:background="#6D6D6D"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TableRow
+            android:id="@+id/TableTow1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/Output"
+                android:layout_width="385dp"
+                android:layout_height="match_parent"
+                android:background="#C0FFC46D"
+                android:text="@string/Starting_Output"
+                android:textAlignment="textEnd"
+                android:textSize="96sp"
+                tools:layout_editor_absoluteX="12dp"
+                tools:layout_editor_absoluteY="19dp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/TableTow2"
+            android:layout_width="169dp"
+            android:layout_height="17dp">
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Button" />
+
+            <Button
+                android:id="@+id/button3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Button" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/TableTow3"
+            android:layout_width="match_parent"
+            android:layout_height="300dp" />
+
+        <TableRow
+            android:id="@+id/TableTow4"
+            android:layout_width="match_parent"
+            android:layout_height="300dp" />
+
+        <TableRow
+            android:id="@+id/TableTow5"
+            android:layout_width="match_parent"
+            android:layout_height="300dp" />
+
+        <TableRow
+            android:id="@+id/TableTow6"
+            android:layout_width="match_parent"
+            android:layout_height="300dp" />
+    </TableLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

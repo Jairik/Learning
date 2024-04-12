@@ -10,8 +10,8 @@ import java.util.Scanner;
 
 public class Proj2 {
 
-    final static int height = 5; //Added to easily access board height
-    final static int width = 7; //Added to easily access board width
+    final static int HEIGHT = 7; //Added to easily access board height
+    final static int WIDTH = 6; //Added to easily access board width
 
     /*Skips two lines in the console
     Modifications: Removed
@@ -24,18 +24,18 @@ public class Proj2 {
      *Modifications: Instead of manually printing each space, implementing
      a nested for loop. Improves readibility and organization*/
     public static void board(char space[][]) {
-        for(int i = 0; i < height; i++) {
+        for(int i = space[0].length-1; i >= 0; i--) {
             System.out.print(" ");
-            for(int j = width; j > 0; j--) {
-                System.out.print(space[i][j]);
-                if(j>1) {
+            for(int j = 0; j < space.length; j++) {
+                System.out.print(space[j][i]);
+                if(j < space.length-1) {
                     System.out.print(" | ");
                 }
             }
             System.out.println(); //Make a new line after every row is created
         }
         System.out.println("---------------------------");
-        System.out.println(" 1 | 2 | 3 | 4 | 5 | 6 | 7");
+        System.out.println(" 1 | 2 | 3 | 4 | 5 | 6 | 7\n");
     }
 
     /*Helper function, checking for a winner at a given index
@@ -50,17 +50,15 @@ public class Proj2 {
                 winnerFound = true;
             }
             //Checking for vertical wins
-            if ((b[i][j + 1] == c && b[i][j + 2] == c && b[i][j + 3] == c)) {
+            else if ((b[i][j + 1] == c && b[i][j + 2] == c && b[i][j + 3] == c)) {
                 winnerFound = true;
             }
             //Checking for horizontal wins
-            if ((b[i + 1][j] == c && b[i + 2][j] == c && b[i + 3][j] == c)) {
+            else if ((b[i + 1][j] == c && b[i + 2][j] == c && b[i + 3][j] == c)) {
                 winnerFound = true;
             }
-        }
-        else {
             //checking for down & left diagonal wins
-            if ((j - 3) > 0) {
+            else if ((j - 3) > 0 && (i + 3) < b.length) {
                 if (b[i][j - 1] == c && b[i + 1][j - 2] == c && b[i + 2][j - 3] == c && b[i + 3][j - 4] == c) {
                     winnerFound = true;
                 }
@@ -96,17 +94,14 @@ public class Proj2 {
     public static boolean again() {
         Scanner in = new Scanner(System.in);
         char userChoice;
-        bool pAgain = false;
 
         System.out.print("Would you like to play again (Y/N)? ");
-        pAgain = in.nextInt();
+        userChoice = in.next().charAt(0);
+        userChoice = Character.toLowerCase(userChoice); //converting to lower case
 
-        if (pAgain == 'Y' || pAgain == 'y') {
-            pAgain = true;
-        }
-        
-        in.close(); //Closing scanner
-        return pAgain;
+        in.close(); 
+
+        return(userChoice == 'y');
     }
 
     /*Initializes board and collects user input, getting the positions of
@@ -115,22 +110,22 @@ public class Proj2 {
      *Modifications: Small formatting changes and simplified extensive
      switch statements*/
     public static void main(String[] args) {
+        //Declaring variables
         Scanner input = new Scanner(System.in);
+        input.getLine(); //Clearing the input buffer for play again
         int column;
         boolean win = false;
         int xvalue = 0, yvalue = 0, player1Win = 0, player2Win = 0, count = 0;
         int yval[] = new int[7];
-        char space[][] = new char[7][6];
+        char space[][] = new char[HEIGHT][WIDTH];
 
         System.out.println("Welcome to Connect 4");
 
-        //This is a very creative way to do this
-        for (int x = 0; x < 42; x++) {
-            space[xvalue][yvalue] = ' ';
-            yvalue++;
-            if (yvalue > 5) {
-                yvalue = 0;
-                xvalue++;
+        //MODIFIED: Although the previous approach may have worked,
+        //a nested for loop is more readible and cleaner
+        for (int x = 0; x < HEIGHT; x++) {
+            for(int y = 0; y < WIDTH; y++) {
+                space[x][y] = ' ';
             }
         }
 
