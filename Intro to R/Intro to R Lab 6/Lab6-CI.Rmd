@@ -179,12 +179,26 @@ The proportion of CIs that cover the true mean is .98, while the average width o
 5.  Now, based on the above results, use the technique in Part 0, create a table that contains three columns: "Coefficient Coefficient" with values 0.80, 0.85, 0.90, 0.95, 0.99; "Prop of CIs cover True Mean" with values you observed in the previous steps; "Ave Width of CIs" with values you observed in the previous steps. Then add a title "CIs from Normal Pop - Different Confidence Coefficients - Sample Size 40". Present the R codes and the table below:
 
     ```{r}
+    library(knitr)
+
+    ##Creating Three Columns
+    Coefficient <- c(.80, .85, .90, .95, .99)
+    Prop_of_CIs_Cover_True_Mean <- c(.81, .84, .9, .94, .98)
+    Width_of_CIs <- c(.41202, .46686, .53558, .643, .86094)
+
+    ##Creating dataFrame
+    CIs_From_Normal_Pop <- data.frame(Coefficient, Prop_of_CIs_Cover_True_Mean, Width_of_CIs)
+
+    ##Changing Column Names and formatting into nice table
+    colnames(CIs_From_Normal_Pop) <- c("Coefficient", "Prop of CIs cover True Mean", "Ave Width of CIs") 
+    kable(CIs_From_Normal_Pop, padding=6,align="ccc",caption = "CIs from Normal Pop - Different Confidence Coefficients - Sample Size 40")
 
     ```
 
 6.  Based on the results on 5, describe how does the proportion of CIs that cover true means, and the average width of CIs changes when confidence coefficient increases? Explain your observations.
 
     ```         
+    As the confidence coefficient increases, the proportion of CIs that cover true means increase at around the same rate. Throughout the samples, they are consistently within one of the confidence coefficient, almost exactly mirroring. The average width of CIs also increases with the confidence coefficient, increasing seemingly exponentially. Additionally, the average widths seem to be approaching 1.
     ```
 
 **End of Assignment 2**
@@ -197,30 +211,69 @@ The next factor we are interested in is the **sample size**.
 
 2.  Go to "Confidence Interval - Sample Mean", download the figure and post it below.
 
+![95% Coefficient Samples Size =10](CI_Sample_Mean_Normal_.95_SS10_s100.png)
+
 3.  Based on the result, what is the proportion of CIs that cover the true mean? What is the average width of CIs?
 
     ```         
+    The proportion of CIs that cover the true mean are .92, while the average width of CIs are 1.41598.
     ```
 
 4.  Repeat question 2,3, but for different sample sizes "40", "90", "160", "250", respectively.
 
-    ```         
-    ```
+![95% Coefficient Samples Size =40](CI_Sample_Mean_Normal_.95_SS40_s100.png)
+
+```         
+The proportion of CIs that cover the true mean are .97, while the average width of CIs are .64094.
+```
+
+![95% Coefficient Samples Size =90](CI_Sample_Mean_Normal_.95_SS90_s100.png)
+
+```         
+The proportion of CIs that cover the true mean are .95, while the average width of CIs are .42214.
+```
+
+![95% Coefficient Samples Size =160](CI_Sample_Mean_Normal_.95_SS160_s100.png)
+
+```         
+The proportion of CIs that cover the true mean are .96, while the average width of CIs are .31252.
+```
+
+![95% Coefficient Samples Size =250](CI_Sample_Mean_Normal_.95_SS250_s100.png)
+
+```         
+The proportion of CIs that cover the true mean are .94, while the average width of CIs are .24958.
+```
 
 5.  Now, based on the above results, use the technique in Part 0, create a table that contains three columns: "Sample Size" with values 10, 40, 90, 160, 250;"Prop of CIs cover True Mean" with values you observed in the previous steps; "Ave Width of CIs" with values you observed in the previous steps. Then add a title "95% CIs from Normal Pop - Different Sample Sizes". Present the R codes and the table below:
 
     ```{r}
+    library(knitr)
 
+    ##Creating Three Columns
+    Sample_Size <- c(10, 40, 90, 160, 250)
+    Prop_of_CIs_Cover_True_Mean <- c(.92, .97, .95, .96, .94)
+    Width_of_CIs <- c(1.14598, .64094, .42214, .31252, .24958)
+
+    ##Creating dataFrame
+    CIs_From_Normal_Pop <- data.frame(Sample_Size, Prop_of_CIs_Cover_True_Mean, Width_of_CIs)
+
+    ##Changing Column Names and formatting into nice table
+    colnames(CIs_From_Normal_Pop) <- c("Sample Size", "Prop of CIs cover True Mean", "Ave Width of CIs")
+    kable(CIs_From_Normal_Pop, padding=6,align="ccc",caption = "CIs from Normal Pop - Different Sample Sizes")
     ```
 
 6.  Based on the results on 5, describe how does the proportion of CIs that cover true means, and the average width of CIs changes when sample size increases? Explain your observations.
 
     ```         
+    The proportion of CIs that cover the true increases with sample size until it peaks at a sample size of 40, then it slowly roughly decreases. As the sample size increases, the average width of CIs decreases at a decreasing exponential rate, slowing down as the sample size gets larger. It appears to be approaching 0 as the sample size increases.
     ```
 
-7.  Now, summarize the observations in assignment 2 and 3. When the coefficient coefficient increase, how does the proportion of CIs cover true means and the average width of CIs changes? How about the effect when the sample size increase? Do you prefer settings that has a higher proportion of CIs that cover the true mean? Do you prefer seetings that has a small average CI width? Based on the answers of the above questions, what should you do if you want to maintain a high proportion and a small average CI width at the same time?
+7.  Now, summarize the observations in assignment 2 and 3. When the coefficient coefficient increase, how does the proportion of CIs cover true means and the average width of CIs changes? How about the effect when the sample size increase? Do you prefer settings that has a higher proportion of CIs that cover the true mean? Do you prefer settings that has a small average CI width? Based on the answers of the above questions, what should you do if you want to maintain a high proportion and a small average CI width at the same time?
 
     ```         
+    When the coefficient changes, then the proportion of CIs covering true means and the average width of CIs both increase, with the proportion to true means nearly mirroring the coefficient and the average width seemingly approaching one. When the sample size increases, the proportion of CIs covering true means stays around the same, peaking around a sample size of 40. The area widths of CIs, however, decreases as the sample size increases. 
+    It may be more desirable to have a higher proportion of CIs that cover the true mean whenever more precision is required, however this may come at the cost of having larger ranges. Conversely, it may be more desirable to have smaller CI width when a smaller range is desired and when precision is less crucial. If you want to maintain a high proportion and small width, it may be most beneficial to choose a large sample size (small proportion trade-off with dramatically smaller average widths) and a coefficient around .90-.95 (The average widths exponentially increase as coefficient gets larger, so a coefficient around the middle gets the best of both worlds).
     ```
 
 **End of Assignment 3**
@@ -247,20 +300,41 @@ We start with small sample size (n=5). Since we are discussing different distrib
 
 2.  Go to "Confidence Interval - Sample Mean", download the figure and post it below.
 
+![](assingment4_2.png)
+
 3.  Based on the result, what is the proportion of CIs that cover the true mean? How many CIs not cover true mean on the left? On the right? Are the difference between left and right greater than 5? Are the widths of CIs relatively close to each other?
 
     ```         
+    The proportion of CIs that cover the true mean is .77, with the CIs not covering the true mean to the left being 11 and the CIs not covering the right being 12. This difference is not greater than 5, and the width of the CIs are not very close to each other, with fairly large variances throughout the widths.
     ```
 
 4.  Repeat question 2,3, but for different population distributions "Uniform", "Right Stewed", "Left Stewed", "Bimodal", and "Cauchy", respectively.
 
-    ```         
-    ```
+![Uniform n=30](CI_Uniform_n30.png) `The proportion of CIs that cover the true mean is .78, with the CIs not covering the true mean to the left being 12 and the CIs not covering the right being 10 (which does not have a difference greater than 5). The width of the CIs look very roughly close to each other, although there are some outliers.` ![Right Skewed n=30](CI_Right_Skewed_n30.png) `The proportion of CIs that cover the true mean is .71, with the CIs not covering the true mean to the left being 23 and the CIs not covering the right being 6. This does have a difference greater than 5, with significantly more CIs not being covered on the left side. The width of the CIs may be close to each other, although the widths do have large variance.`
+
+![Left Skewed n=30](CI_Left_Skewed_n30.png) ``` The proportion of CIs that cover the true mean is .75, with the CIs not covering the true mean to the left being 5 and the CIs not covering the right being 20. This does have a difference greater than 5, with significantly more CIs not covering the right. Similarly to right-skewed,``the width of the CIs may be close to each other, although the widths do have large variance.``. ```
+
+![Bimodal n=30](CI_Bimodal_n30.png) `The proportion of CIs that cover the true mean is .86, with the CIs not covering the true mean to the left being 10 and the CIs not covering the right being 4. This does have a difference greater than 5, with more CIs not covering the left. The width of the CIs are fairly close to each other.`
+
+![Cauchy n=30](CI_Cauchy_n30.png) `The proportion of CIs that cover the true mean is .60, with the CIs not covering the true mean to the left being 0 and the CIs not covering the right being 40. This difference is obviously greater than 5, with all CIs not covering the mean being on the right. Although it is hard to tell if the widths are close, I would argue that they are not close.`
 
 5.  Now, based on the above results, use the technique in Part 0, create a table that contains three columns: "Parent Distribution" with values c("Normal", "Uniform", "Right Stewed", "Left Stewed", "Bimodal", "Cauchy"); "Prop of CIs cover True Mean" with values you observed in the previous steps; "Num of left CI not cover true mean" with values you observed in the previous steps; "Num of right CI not cover true mean" with values you observed in the previous steps.. Then add a title "80% CIs from Different Pop - Sample Size 5". Present the R codes and the table below:
 
     ```{r}
+    library(knitr) #Ensuring that the library is installed
 
+    #Creating the three columns
+    Parent_Distribution <- c("Normal", "Uniform", "Right Skewed", "Left Skewed", "Bimodal", "Cauchy")
+    Prop_of_CIs_Cover_True_Mean2 <- c(.77, .78, .71, .75, .86, .60)
+    Num_Of_Left_CI_Not_Cover_True_Mean <- c(11, 12, 23, 5, 10, 0)
+    Num_Of_Right_CI_Not_Cover_True_Mean <- c(12, 10, 6, 20, 4, 40)
+
+    #Creating the dataFrame
+    CIs_From_Different_Pop <- data.frame(Parent_Distribution, Prop_of_CIs_Cover_True_Mean2, Num_Of_Left_CI_Not_Cover_True_Mean, Num_Of_Right_CI_Not_Cover_True_Mean)
+
+    #Changing column names & formatting
+    colnames(CIs_From_Different_Pop) <- c("Parent Distribution", "Prop of CIs Cover True Mean", "Num of Left CI Not Cover True Mean", "Num of Right CI Not Cover True Mean")
+    kable(CIs_From_Different_Pop, padding=6, align="ccc",caption="80% CIs from Different Pop - Sample Size 5")
     ```
 
 6.  Based on the results on 5, describe your observations. When the sample size is small, will you trust the results of confidence interval when the you believe the sample data is not from a normal distributed population? Why or why not? (You may want to discussed the different distributions separately)
@@ -268,6 +342,7 @@ We start with small sample size (n=5). Since we are discussing different distrib
     (remember you can check the normality using QQ-plot, more details will be discussed in Lab 7)
 
     ```         
+    When the sample size is small, the only distribution that I would trust is Uniform distribution. It had a relatively high proportion of CIs covering the true mean, and a fairly equal number of CIs not covering the mean on both the left and right (12 and 10) (this makes sense considering the distribution, I would assume that these would be equal, on average). As for right skewed and left skewed, I would not trust these distribution, as they had a completely disproportionate amount of CIs not covering the mean on the right and left side, respectively. For Bimodal, I would also not completely trust this distribution, as there were noteably more CIs not covering the true mean on the left side than the right side. However, the proportion of CIs covering the true mean is the highest out of all distributions, so it is more trust than left and right skewed. Cauchy, on the other hand, cannot be trusted at all. This distribution had the lowest proportion of CIs covering the mean, had extremely large widths, and had an extreme difference of CIs on the left and right side (0 vs 40).
     ```
 
 **End of Assignment 4**
@@ -276,9 +351,41 @@ What if the sample size is large enough?
 
 ## Assignment 5
 
-Repeat and answer all questions in steps 1-5 in Assignment 4, but change the sample size to 500. Then answer the question. When the sample size is large, will you trust results of confidence interval when the you believe the sample data is not from a normal distributed population? Why or why not? (You may want to discussed the different distributions separately)
+Repeat and answer all questions in steps 1-5 in Assignment 4, but change the sample size to 500.
+
+![Normal n=500](CI_Normal_n500.png) `The proportion of CIs that cover the true mean is .85, with the CIs not covering the true mean to the left being 8 and the CIs not covering the right being 7 (which does not have a difference greater than 5). The width of the CIs look very close to each other.`
+
+![Uniform n=500](CI_Uniform_n500.png) `The proportion of CIs that cover the true mean is .73, with the CIs not covering the true mean to the left being 10 and the CIs not covering the right being 17. This does have a difference more than 5, with 7 more CIs not covering the right than the left. The width of the CIs look very close to each other.`
+
+![Right Skewed n=500](CI_Right_Skewed_n500.png) `The proportion of CIs that cover the true mean is .76, with the CIs not covering the true mean to the left being 14 and the CIs not covering the right being 10. This does have a difference greater than 5, with more CIs not being covered on the right side. The width of the CIs look very close to each other.`
+
+![Left Skewed n=500](CI_Left_Skewed_n500.png) `The proportion of CIs that cover the true mean is .71, with the CIs not covering the true mean to the left being 13 and the CIs not covering the right being 16. This does not have a difference greater than 5. The widths of the CIs look very close to each other.`
+
+![Bimodal n=500](CI_Bimodal_n500.png) `The proportion of CIs that cover the true mean is .81, with the CIs not covering the true mean to the left being 8 and the CIs not covering the right being 11. This does not have a difference greater than 5. The width of the CIs seem to be very close to each other.`
+
+![Cauchy n=500](CI_Cauchy_n500.png) `The proportion of CIs that cover the true mean is .56, with the CIs not covering the true mean to the left being 0 and the CIs not covering the right being 44. This difference is obviously greater than 5, with all CIs not covering the mean being on the right. The widths do not seem to appear very close.`
+
+```{r}
+library(knitr) 
+
+#Creating the three columns
+Parent_Distribution <- c("Normal", "Uniform", "Right Skewed", "Left Skewed", "Bimodal", "Cauchy")
+Prop_of_CIs_Cover_True_Mean3 <- c(.85, .73, .76, .71, .81, .56)
+Num_Of_Left_CI_Not_Cover_True_Mean1 <- c(8, 10, 14, 13, 8, 0)
+Num_Of_Right_CI_Not_Cover_True_Mean1 <- c(7, 17, 10, 16, 11, 44)
+
+#Creating the dataFrame
+CIs_From_Different_Pop <- data.frame(Parent_Distribution, Prop_of_CIs_Cover_True_Mean3, Num_Of_Left_CI_Not_Cover_True_Mean1, Num_Of_Right_CI_Not_Cover_True_Mean1)
+
+#Changing column names & formatting
+colnames(CIs_From_Different_Pop) <- c("Parent Distribution", "Prop of CIs Cover True Mean", "Num of Left CI Not Cover True Mean", "Num of Right CI Not Cover True Mean")
+kable(CIs_From_Different_Pop, padding=6, align="ccc",caption="80% CIs from Different Pop - Sample Size 500")
+```
+
+Then answer the question. When the sample size is large, will you trust results of confidence interval when the you believe the sample data is not from a normal distributed population? Why or why not? (You may want to discussed the different distributions separately)
 
 ```         
+When the sample size is large, I will only trust the results of the confidence interval for Normally and Bimodally distributed data. Both of these distributions had a large proportion of CIs covering the true mean (.85 and .81, respectively) and had a close amount of CIs not covering the true mean on the left and the right. As for the others, however, I would not trust the results of the other distributions. To my surprise, when increasing the sample size of the Uniform distribution, the difference between the number of CI not covering the mean from the left and right increased dramatically. Additionally, it had a low proportion of CIs covering the true mean of .73. The left and right distribution only had a few differences (3 and 4, respectively), however they had a low proportion of CIs covering the true mean. Lastly, as with the last case, the Cauchy distribtion had a very low proportion of .56 and an even larger difference between the right and left, now having a difference of 44.
 ```
 
 **End of Assignment 5**
