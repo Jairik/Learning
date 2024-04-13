@@ -8,7 +8,7 @@ import java.util.Scanner;
  */
 
 
-public class Proj2 {
+public class RefactoredJavaClass {
 
     final static int HEIGHT = 7; //Added to easily access board height
     final static int WIDTH = 6; //Added to easily access board width
@@ -97,9 +97,13 @@ public class Proj2 {
 
         System.out.print("Would you like to play again (Y/N)? ");
         userChoice = in.next().charAt(0);
-        userChoice = Character.toLowerCase(userChoice); //converting to lower case
 
-        in.close(); 
+        //Clearing the input buffer for any stray characters
+        if(in.hasNextLine()) {
+            in.nextLine();
+        }
+
+        userChoice = Character.toLowerCase(userChoice); //converting to lower case
 
         return(userChoice == 'y');
     }
@@ -112,7 +116,6 @@ public class Proj2 {
     public static void main(String[] args) {
         //Declaring variables
         Scanner input = new Scanner(System.in);
-        input.getLine(); //Clearing the input buffer for play again
         int column;
         boolean win = false;
         int xvalue = 0, yvalue = 0, player1Win = 0, player2Win = 0, count = 0;
@@ -170,7 +173,7 @@ public class Proj2 {
                 }
 
                 do {
-                    System.out.print("Player 1: chose the column that you want: ");
+                    System.out.print("Player 1: Choose the column that you want: ");
                     column = input.nextInt();
 
                     if (column >= 8 || column <= 0 || yval[column - 1] > 5) {
