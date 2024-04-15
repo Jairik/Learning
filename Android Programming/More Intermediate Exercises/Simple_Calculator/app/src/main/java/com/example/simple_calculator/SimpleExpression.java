@@ -61,7 +61,7 @@ public class SimpleExpression {
         else if(operator.equals("x")) {
             endValue = operand1 * operand2;
         }
-        else if(operator.equals("/")) {
+        else if(operator.equals("/") && operand2 != 0) {
             endValue = operand1 / operand2;
         }
         else { //operator = %

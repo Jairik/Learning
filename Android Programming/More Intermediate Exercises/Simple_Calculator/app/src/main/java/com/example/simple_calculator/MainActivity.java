@@ -3,13 +3,9 @@ package com.example.simple_calculator;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
-
-
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -77,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         catch (NumberFormatException e) {
             expression.setOperand2(0);
         }
-        numberDisplay.setText((expression.getEndValue()));
+        numberDisplay.setText(String.valueOf(expression.getEndValue()));
     }
 
     /*
