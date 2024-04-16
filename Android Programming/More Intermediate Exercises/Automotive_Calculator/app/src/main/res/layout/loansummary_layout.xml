@@ -1,0 +1,76 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000506"
+    tools:context=".purchaseactivity">
+
+    <!-- Top View Stuff - Visual -->
+
+    <ImageView
+        android:id="@+id/JJs_Automotive_Logo"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/jj_logo"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/image"/>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@id/JJs_Automotive_Logo"
+        android:background="@color/gold"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center_horizontal"
+        android:text="@string/loan_summary"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <!-- Displaying the monthly payment information -->
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_alignRight="@+id/textView1"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="2dp"
+        android:textColor="@color/gold"
+        android:fontFamily="sans-serif-black"
+        android:textSize="20sp" />
+
+    <!-- Displaying the car loan summary -->
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_alignRight="@+id/textView1"
+        android:layout_below="@+id/textView2"
+        android:layout_marginTop="2dp"
+        android:textSize="14sp"
+        android:textColor="@color/gold"
+        android:fontFamily="sans-serif-black"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" />
+
+    <!-- Adding the button that returns to previous activity -->
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/black"
+        android:background="@color/gold"
+        android:fontFamily="sans-serif-black"
+        android:onClick="dataEntry"
+        android:text="@string/go_data_entry" />
+
+</RelativeLayout>

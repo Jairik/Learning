@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000506"
+    tools:context=".purchaseactivity">
+
+    <!-- Top View Stuff - Visual -->
+
+    <ImageView
+        android:id="@+id/JJs_Automotive_Logo"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/jj_logo"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/image"/>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_below="@id/JJs_Automotive_Logo"
+        android:background="@color/gold"
+        android:fontFamily="sans-serif-black"
+        android:gravity="center_horizontal"
+        android:text="@string/instruction"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <!-- Getting the price of car -->
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/textView1"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/car_price"
+        android:textColor="@color/gold"
+        android:fontFamily="sans-serif-black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/textView2"
+        android:layout_marginLeft="40dp"
+        android:layout_toRightOf="@id/textView2"
+        android:layout_marginTop="40dp"
+        android:text="@string/dollar_sign"
+        android:textColor="@color/gold"
+        android:fontFamily="sans-serif-black"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/textView3"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/textView3"
+        android:ems="10"
+        android:gravity="right"
+        android:fontFamily="sans-serif-black"
+        android:inputType="number"
+        android:textColor="@color/gold"
+        android:width="90dp"/>
+
+    <!-- Getting the down payment -->
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/textView2"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="17dp"
+        android:text="@string/down_payment"
+        android:textColor="@color/gold"
+        android:textSize="18sp"
+        android:fontFamily="sans-serif-black"/>
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/textView4"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/textView4"
+        android:layout_marginTop="40dp"
+        android:text="@string/dollar_sign"
+        android:textColor="@color/gold"
+        android:fontFamily="sans-serif-black"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/textView5"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/textView5"
+        android:fontFamily="sans-serif-black"
+        android:ems="10"
+        android:gravity="right"
+        android:inputType="number"
+        android:textColor="@color/gold"
+        android:width="90dp"/>
+    
+    <!-- Getting loan selection -->
+    
+    <RadioGroup
+        android:id="@+id/radioGroup1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView4"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:background="@color/gold"
+        android:paddingRight="40dp"
+        android:paddingLeft="20dp" >
+        
+        <RadioButton
+            android:id="@+id/radio0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-black"
+            android:checked="true"
+            android:text="@string/years2"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <RadioButton
+            android:id="@+id/radio1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-black"
+            android:checked="true"
+            android:text="@string/years3"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+
+        <RadioButton
+            android:id="@+id/radio2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-black"
+            android:checked="true"
+            android:text="@string/years4"
+            android:textColor="@color/black"
+            android:textSize="12sp" />
+    </RadioGroup>
+
+    <!-- Adding the button -->
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-black"
+        android:layout_below="@+id/radioGroup1"
+        android:layout_centerHorizontal="true"
+        android:text="@string/loan_term"
+        android:textColor="@color/gold"
+        android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="10sp"
+        android:background="@color/gold"
+        android:text="@string/generate_btn"
+        android:onClick="activateLoanSummary" />
+
+
+</RelativeLayout>
