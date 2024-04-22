@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Simple_Todo_List</string>
+    <string name="add_item">Add Item</string>
+    <string name="enter_a_new_item">Enter a new item</string>
+    <string name="program_title">JJ\'s To-Do List</string>
+</resources>
