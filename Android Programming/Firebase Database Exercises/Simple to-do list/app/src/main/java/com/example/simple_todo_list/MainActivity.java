@@ -9,10 +9,11 @@ import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /* Main Program - JJ's To-Do List */
@@ -31,10 +32,9 @@ public class MainActivity extends AppCompatActivity {
         //Setting up variables
         lvItems = (ListView)findViewById(R.id.lvItems);
         items = new ArrayList<>();
+        readItems();
         itemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
         lvItems.setAdapter(itemsAdapter);
-        items.add("First Item");
-        items.add("Second Item");
         //Invoking ListViewListener to delete items
         setUpListViewListener();
     }
@@ -45,17 +45,43 @@ public class MainActivity extends AppCompatActivity {
         String itemText = etNewItem.getText().toString();
         itemsAdapter.add(itemText);
         etNewItem.setText("");
+        writeItems();
     }
 
-    //
+    //Set up a long click listener to delete entries after long click
     private void setUpListViewListener() {
         lvItems.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 items.remove(position);
                 itemsAdapter.notifyDataSetChanged();
+                writeItems();
                 return true;
             }
         });
+    }
+
+    //Method to open a file and read a newline-delimited list of items
+    private void readItems() {
+        File filesDir = getFilesDir();
+        File todoFile = new File(filesDir, "todo.txt");
+        try {
+            items = new ArrayList<String>(FileUtils.readLines(todoFile));
+        }
+        catch (IOException e){
+            items = new ArrayList<String>();
+        }
+    }
+
+    //Method to save a file and write a newline-delimited list of items
+    private void writeItems() {
+        File filesDir = getFilesDir();
+        File todoFile = new File(filesDir, "todo.txt");
+        try {
+            FileUtils.writeLines(todoFile, items);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

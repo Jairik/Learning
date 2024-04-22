@@ -40,5 +40,5 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    //implementation(commons-io:commons-io:2.11.0)
+    implementation("commons-io:commons-io:2.11.0")  // Apache Commons IO
 }
