@@ -8,10 +8,14 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.*;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.apache.commons.io.FileUtils;
 
@@ -28,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     ListView lvItems; //Where items will be displayed
     FirebaseDatabase database; //Database to hold tasks
     DatabaseReference tasksReference; //Reference to tasks in dataBase
+    ArrayList<String> itemKeys; //List of keys of items in database
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,20 +47,24 @@ public class MainActivity extends AppCompatActivity {
         //Setting up Firebase Database
         database = FirebaseDatabase.getInstance();
         tasksReference = database.getReference("tasks");
+        itemKeys = new ArrayList<>();
         //Invoking ListViewListener to delete items
         setUpListViewListener();
+        loadItems();
     }
 
     //OnClick method for the "add item" button
     public void onAddItem(View view) {
         EditText etNewItem = (EditText) findViewById(R.id.etNewItem);
         String itemText = etNewItem.getText().toString();
-        itemsAdapter.add(itemText);
-        etNewItem.setText("");
-        //Add items to firebase
-        String taskID = tasksReference.push().getKey(); //Unique ID for each task
-        Task task = new Task(itemText, taskID);
-        tasksReference.child(taskID).setValue(task);
+        if(!itemText.isEmpty()) { //Checking to ensure tasks edit field is not empty
+            itemsAdapter.add(itemText);
+            etNewItem.setText("");
+            //Add items to firebase
+            String taskID = tasksReference.push().getKey(); //Unique ID for each task
+            itemKeys.add(taskID); //Add key to list of keys
+            tasksReference.child(taskID).setValue(itemText); //Add item to database
+        }
     }
 
     //Set up a long click listener to delete entries after long click
@@ -64,17 +73,39 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 //Remove task from firebase
-                removeTask(position);
+                String keyToDelete = itemKeys.get(position);
+                DatabaseReference itemToDelete = tasksReference.child(keyToDelete);
+                itemToDelete.removeValue();
+                itemKeys.remove(position); //Remove key from itemKeys list
                 //Remove from GUI
-                items.remove(position);
+                items.remove(position); //Remove item from item list
                 itemsAdapter.notifyDataSetChanged();
                 return true;
             }
         });
     }
 
-    private void removeTask(int position) {
-        Task taskToRemove = tasks
+    //Loads the items for the to-do list from firebase
+    private void loadItems() {
+        tasksReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                items.clear();
+                itemKeys.clear();
+                for(DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String curItem = snapshot.getValue(String.class);
+                    items.add(curItem); //Adding to items list
+                    itemKeys.add(snapshot.getKey());
+                }
+                itemsAdapter.notifyDataSetChanged();
+            }
+
+            //Handling error case when item cannot be read
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                System.out.println("Failed to read item" + error.toException());
+            }
+        });
     }
 
     /* --- Methods no longer needed due to Firebase Integration ---
