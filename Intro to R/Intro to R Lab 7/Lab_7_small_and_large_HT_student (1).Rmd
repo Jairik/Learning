@@ -1,0 +1,339 @@
+---
+title: 'Lab 7: Hypothesis Testing for Large and Small Samples'
+author: "kgteller"
+date: "2023-06-04"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(BSDA)
+```
+
+# Lab 7:Hypothesis Testing for Large and Small Samples
+
+Today we will be going through how to conduct hypothesis tests when we have sample sizes greater than or equal to 30 and when the sample size is small. In general whenever conducting a hypothesis test the following eight steps can help:
+
+1.  A description the null and alternative hypotheses in terms of the problem.
+
+2.  A statement of the null and alternative hypotheses in standard symbols.
+
+3.  The significance level (size of the Type I error), α, that will be tolerated.
+
+4.  The name of the statistical test to be used and the assumptions required in order for the test to be valid. (i.e. small sample size, not approximately normal, etc.)
+
+5.  A clear description of exactly what the decision rule is; i.e. under what circumstances is the null hypothesis rejected.
+
+6.  A clear statement indicating whether or not you actually reject H0. This decision must be linked to the numerical value of p actually observed and the value of α.
+
+7.  A very clear description of what was actually decided in the context of the original problem. For example, if the problem is about mean airfares between two cities, simply saying reject Ho is not good enough; you need to say what this decision means as it applies to mean airfares.
+
+8.  Any statistical decision method is subject to Type I or Type II error. Discuss which type is possible in your final decision and if possible, its probability.
+
+# Large population Size
+
+For a sample size n to be large we need $n \geq 30$. In these cases we can run a T-test on our sample.
+
+to run a T-test in R using the t.test() command. the inputs of the command are the data, $\mu=\mu_0$, alternative="two.sided","greater","less", conf.level=c-level, paired= True or False.
+
+To run a t-test we can load a data-frame and choose the column of data we want to run the test on.
+
+```{r}
+
+
+mydata<-read.csv("firstgrade.csv")
+
+x<-mydata["Height"]
+
+y<-mydata["Weight"]
+
+```
+
+Now we can use the data in x and y to run the following hypothesis tests ( follow the 8 step method described above) :
+
+## Assignment 1
+
+The state department of education in a particular state claims that the mean height of a first grader is 42 inches. A researcher in a particular region of the state believes the mean height of first grade students in this region exceeds 42 inches. The researcher will examine height data for 75 first graders in the region and can tolerate the size of the Type I error being α = 0.05. following the 8 steps described above run the appropriate test and clearly state your conclusion.
+
+```{r}
+#Null Hypothesis- The mean of the first graders is 42 inches (mu=42)
+#Alternative Hypothesis- The mean is greater than 42 inches (mu>42)
+#α = .05
+#Sample size = 75 - T-test
+
+#--- Get & print the Results ---
+results1 <- t.test(x, mu=42, alternative="greater", conf.level=.95, paired=FALSE) 
+print(results1)
+
+```
+
+```         
+Null Hypothesis- The mean of the first graders is 42 inches (mu=42)
+Alternative Hypothesis- The mean is greater than 42 inches (mu>42)
+
+α = .05
+
+Sample size = 75, so a one-sample T-test is best to use
+
+Null hypothesis is rejected if the p-value is less than than α (.05)
+
+--- Post test ---
+
+The null hypothesis (H0) is rejected under the fact that the p-value (.02718) is less than α (.05)
+
+In the context of this problem, we can confirm with these statistics that the researcher was correct in the fact that first grader's mean heights are actually greater than 42 inches. This rejects the state department of education's claim that the mean height of a first grader is 42 inches.
+
+In this test, there is a 5% chance of a type 1 error occuring.
+```
+
+**End Assignment 1**
+
+## Assignment 2
+
+The state department of education in a particular state claims that the mean weight of a first grader is 43 lbs. A researcher in a particular region of the state believes the mean weight of first grade students in this region exceeds 43 lbs. The researcher will examine weight data for 73 first graders in the region and can tolerate the size of the Type I error being α = 0.05. Following the 8 steps described above run the appropriate test and clearly state your conclusion.
+
+```{r}
+#Null Hypothesis- The mean weight of a first grader is 43 lbs
+#Alternative Hypothesis- The mean weight of a first grader is exceeds 43 lbs
+#α = 0.05
+#Sample size - 73 - T Test
+
+#--- Get & print the Results ---
+results1 <- t.test(y, mu=43, alternative="greater", conf.level=.95, paired=FALSE) 
+print(results1)
+```
+
+```         
+Null Hypothesis- The mean of the first grader's weight is 43 lbs (mu=43)
+Alternative Hypothesis- The mean is greater than 43 lbs (mu>43)
+
+α = .05
+
+Sample size = 73, so a one-sample T-test is best to use
+
+Null hypothesis is rejected if the p-value is less than than α (.05)
+
+--- Post test ---
+
+The null hypothesis (H0) is not rejected under the fact that the p-value (.05376) is greater than α (.05)
+
+In the context of this problem, we can confirm with these statistics that the state department of education was correct in the fact that the mean of first grader's weight is 43lbs. This rejects the researcher's belief that the first grader's weight exceeds 43 lbs.
+
+In this test, there is a 5% chance of a type 1 error occuring.
+```
+
+**End Assignment 2**
+
+# Small Population Size
+
+Testing hypotheses about a population measure of location; e.g., mean or median when only a small random sample is available (n \< 30). If we are sampling from a normal population we can continue to use the 1-sample t-test. However, if we are sampling from non-normal population, the t-test might not be appropriate. Other tests are available e.g., the 1-sample Wilcoxon test and the 1-sample sign test, and these might be better choices when sampling from a non-normal population.
+
+For small samples sizes the first thing that needs to be done is to check whether or not the sample can form an approximately normal distribution.
+
+To test a data set to determine whether or not it is reasonable to assume it is a random sample from a normal distribution we will use the Anderson-Darling Test. The null and alternative hypotheses for the Anderson-Darling test are;
+
+$H_0:$ The data is a random sample from a normal distribution $H_1:$ The data is not a random sample from a normal distribution.
+
+Usually the value of $\alpha$ for this hypothesis test is .05, so a p-value less than .05 would lead to the decision to reject $H_0$; i.e., to conclude that there is evidence that the random sample is not from a normal population. If we do reject $H_0$, then a 1 sample t-test should not be used to test a population mean.
+
+To run the anderson-darling test in R we need the nortest package and then can use the command ad.test(). To visualize the data and how close to normal the data is we can use the car package and the qqPlot() command.
+
+To start we will produce some random data from a standard normal distribution.
+
+```{r}
+library(nortest)
+
+library(car)
+x_Z25<-rnorm(25,0,1)
+
+ad.test(x_Z25)
+
+qqPlot(x_Z25)
+
+```
+
+## Assignment 3
+
+To get some practice using the Anderson-Darling test label three columns appropriately and then generate three random samples of size 25 using Random Data. In your first variable put a random sample of size 25 from a normal distribution with mean 0 and standard deviation 12. In your second variable, put a random sample of size 25 from an exponential population with mean 12, and in your third variable put a random sample from a Cauchy distribution with location parameter 0 and scale parameter 12. Use the Anderson-Darling test to test each of these data sets for normality.Be sure to state for each test the appropriate null and alternative hypotheses, the $\alpha$ being used, the p-value for the test and the conclusion. Also include the normality plot for each.
+
+```{r}
+library(nortest) #Used to run Anderson-Darling test
+library(car) #Used with qqplot() to visualize data
+
+#Random Normal Distribution with sample size=12, mu=0, sd=12
+random_sample_normal<-rnorm(25,0,12) 
+
+#Running the Anderson Darling test on the random sample
+ad.test(random_sample_normal)
+
+#Visualizing the data to observe normality
+qqPlot(random_sample_normal)
+
+```
+
+```         
+Null Hypothesis: The data from a random normal distribution with sample size=12, mu=0, and sd=12 is normal.
+Alternative Hypothesis: The data from a random normal distribution with sample size=12, mu=0, and sd=12 is NOT normal.
+α = .05
+
+-- Post Test --
+p-value: 0.1232
+Conclusion: Since the p-value is greater than α, this data follows the Null Hypothesis stating that it is normal.
+```
+
+```{r}
+#Random Exponential population with sample size = 25 and mu = 12
+random_sample_exponential<-rexp(25, 12)
+
+#Running the Anderson Darling test on the random sample
+ad.test(random_sample_exponential)
+
+#Visualizing the data to observe normality
+qqPlot(random_sample_exponential)
+```
+
+```         
+Null Hypothesis: The data from a random exponential population with sample size=25 and mu=12 is normal.
+Alternative HypothesiNull Hypothesis: The data from a random exponential population with sample size=25 and mu=12 is normal.
+α = .05
+
+-- Post Test --
+p-value: 0.005178
+Conclusion: Since the p-value is less than α, this data follows the Alternative Hypothesis stating that it is NOT normal.
+```
+
+```{r}
+#Random Cauchy population with sample size = 25, location parameter = 0,
+#and scale parameter = 12
+random_sample_cauchy<-rcauchy(25, 0, 12)
+
+#Running the Anderson Darling test on the random sample
+ad.test(random_sample_cauchy)
+
+#Visualizing the data to observe normality
+qqPlot(random_sample_cauchy)
+
+```
+
+```         
+Null Hypothesis: The data from a Cauchy distribution with a sample size of 25, location parameter of 0, and scale parameter of 12 is normal.
+Alternative Hypothesis: The data from a Cauchy distribution with sample size of 25, a location parameter of 0 and scale parameter of 12 is NOT normal.
+α = .05
+
+-- Post Test --
+p-value: 0.000000000247
+Conclusion: Since the p-value is way less than α, this data follows the Alternative Hypothesis stating that it is NOT normal.
+```
+
+**End Assignment 3**
+
+Now based on the results there are three possible tests that can be used:
+
+• If the data is from a normal distribution, then the population mean µ is the same as the population median, so a 1 sample t-test should be used.
+
+• If the population distribution is symmetric; i.e. not skewed, then the 1 sample Wilcoxon Test should be used. (In this case the population mean is also the same as population median.) In R we can use wilcox.test() command
+
+• If the population is neither symmetric nor normal, then use a 1 sample Sign Test would be used. (And in this case the population median is different from the population mean.) In R we can use the SIGN.test() command.
+
+For the following two problems you will use the data in the Banking.csv file. load the data into a data-frame and complete the following two problems:
+
+## Assignment 4
+
+The median weight of a penny is believed to be at least 450 grams. A researcher believes the median has dropped below 450 grams. So the null hypothesis is the median equals 450 grams and the alternative hypothesis is the median is less than 450 grams. The researcher is willing to tolerate a Type I error of size α = .05. Unfortunately, the researcher only has access to a random sample of size 10 which is less than 30. preform the appropriate test to test this hypothesis and clearly state your conclusion following the 8 step method described above. Use the 1991 column in the data frame.
+
+```{r}
+library(BSDA)
+library(nortest) #Used to run Anderson-Darling test
+library(car) #Used with qqplot() to visualize data
+#Loading data to dataframe
+myDataFrame<-read.csv("Banking.csv")
+x1<-myDataFrame$'X1991' #$ needed else it doesn't work
+
+#Checking for normality
+ad.test(x1) #Testing for normality
+qqPlot(x1) #Visualizing normality
+
+#p-value is greater than .05, so we can continue to treat this as a normal distribution and run a t-test
+results2 <- t.test(x1, mu=450, alternative="less", conf.level=.95, paired=FALSE) 
+print(results2)
+
+
+```
+
+```         
+Null Hypothesis: The median weight of a penny equals 450 grams in 1991
+Alternative Hypothesis: The median weight of a penny is less than 450 grams in 1991
+
+α = .05
+
+Sample size = 10 and the sample is normally-distributed, so a one-sample T-test is best to use
+
+Null hypothesis is rejected if the p-value is less than than α (.05)
+
+--- Post test ---
+
+The null hypothesis (H0) is rejected under the fact that the p-value (0.0418) is less than α (.05)
+
+In the context of this problem, we can confirm with these statistics that the researcher was correct in that the median weight of a penny is less than 450 grams in 1991. This means we can reject the Null Hypothethesis that the weight of a penny equals 450 grams in 1991.
+
+In this test, there is a 5% chance of a type 1 error occuring.
+```
+
+**End Assignment 4**
+
+## Assignment 5
+
+Now assume that a researcher wants to know if the median weight was greater than 350 grams in 1990 preform the appropriate test to test this hypotheses and clearly state your conclusion following the 8 step method described above.
+
+```{r}
+library(BSDA)
+library(nortest) #Used to run Anderson-Darling test
+library(car) #Used with qqplot() to visualize data
+
+#Loading data to dataframe
+myDataFrame<-read.csv("Banking.csv")
+x2<-myDataFrame$'X1990' #$ needed else it doesn't work
+
+#Checking for normality
+ad.test(x2) #Testing for normality
+qqPlot(x2) #Visualizing normality
+summary(x2) #Since it is not normal, aquiring summary
+hist(x2) #Aquiring visual summary
+
+#It can be determined that the data is skewed, so a Wilcoxon Test would be the best option
+result2<-wilcox.test(x2, mu=350, alternative="greater", conf.level=.95, paired=FALSE)
+print(result2)
+```
+
+```         
+Null Hypothesis: The median weight of a penny equals 350 grams in 1990.
+Alternative Hypothesis: The median weight of a penny is greater than 350 grams in 1991.
+
+α = .05
+
+Sample size = 10 and the data is 
+
+Null hypothesis is rejected if the p-value is less than than α (.05)
+
+--- Post test ---
+
+The null hypothesis (H0) is not rejected under the fact that the p-value (0.5771) is greater than α (.05)
+
+In the context of this problem, we can confirm with these statistics that the original belief that the weight of a penny is 350 grams in 1990 is correct. Similarly, we can conclude that the weight of a penny is NOT greater than 350 
+grams, as the researcher hypothesized.
+
+In this test, there is a 5% chance of a type 1 error occuring.
+```
+
+**End Assignment 5**
+
+## Summary Statistics
+
+In R we can also run a t-test with summary statistics. So if we have just $\bar{x}$, $s_x$, and $n$, we can still run the t-test using the function tsum.test() from the BDSA package. the inputs are mean.x,s.x,n.x,alternative="two.sided","greater","less", $\mu=\mu_0$,conf.level.
+
+Lets say we have the summary statistics of baby weights at a local hospital with $\bar{x}=6.45$lbs and $s_x=4$ with a sample size of $n=45$ and we want to test if the average weight of babies in this hospital is heavier than 6 lbs at an $\alpha=.05$. We could do that as follows:
+
+```{r}
+tsum.test(6.45,4,45,alternative = 'greater',conf.level = .95)
+```
