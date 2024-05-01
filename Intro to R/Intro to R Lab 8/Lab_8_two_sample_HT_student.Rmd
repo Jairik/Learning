@@ -70,7 +70,7 @@ In this data set, there are 8 variables:
 create a data-frame and then create the following objects to answer each of the other assignments:
 
 |     Name      |                    Explanation of Name                    |
-|:---------------------:|:-----------------------------------------------:|
+|:-------------:|:---------------------------------------------------------:|
 |     Diffs     |                       Pulse1-Pulse2                       |
 |    Diffs_R    |          Pulse1 -- Pulse2 for Runners (Ran = 1)           |
 |  Diffs\_\~R   |        Pulse1 -- Pulse2 for non Runners (Ran = 2)         |
@@ -128,24 +128,26 @@ Weight_F_nS <- data$Weight[data$Sex == 2 & data$Smokes == 2]
 A researcher wants to test the hypothesis that the average pulse of the class was greater the second time around than the first time. Conduct the appropriate test to test this hypothesis and clearly state your conclusion following the 8 steps described above.
 
 ```{r}
-#Testing Normality for different pulses
-summary(Diffs)
-result1 <- ad.test(Diffs)
-print(result1)
-
-#Data is non-normal, so a wilcox test is best. alternative is set to less since we are comparing the differences
-wilcox.test(data$Pulse1, data$Pulse2, paired = TRUE, alternative = "greater")
-
+#We are comparing averages, so a t-test is to be used
+results1 <- t.test(data$Pulse1, data$Pulse2, paired = "true")
+print(results1)
 ```
 
 ```         
 Null Hypothesis- The average pulse of the class was equal the first and second time (mu1=mu2)
-Alternative Hypothesis- The average pulse of the class was greater the second time (mu1<mu2)
+Alternative Hypothesis- The average pulse of the class is not equal prior and after the expirement (mu1 != mu2)
 
 α = .05
 
-The sample size is 92 and the data is not normal, so the Mann-whitney test is most appropriate.
+The sample size is 92 and we are concerned about the means, so a two-sample t-test is best in this scenario
 
+If the p-value is less than α (.05) we reject the Null Hypothesis
+
+The p-value of this test is .000002023, which is significantly smaller than α (.05). Therefore, the Null Hypothesis is rejected.
+
+Since the Null Hypothesis is rejected, we can conclude that the two samples are not equal. Additionally, we can also conclude that the Alternative hypothesis is true, which is that the two pulses are not equal.
+
+There is a 5% probability of a Type 1 error.
 ```
 
 **End Assignment 2**
