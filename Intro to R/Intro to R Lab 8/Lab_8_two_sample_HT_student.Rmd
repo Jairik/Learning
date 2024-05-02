@@ -193,8 +193,8 @@ A researcher now wants to run the same hypothesis as before but with the non-run
 #Getting the sample size
 print(length(Diffs_nR))
 #We are comparing means and the population is large enough, so a t-test is to be used
-results2 <- t.test(Diffs_nR, alternative = "less")
-print(results2)
+results3 <- t.test(Diffs_nR, alternative = "less")
+print(results3)
 ```
 
 ```         
@@ -226,8 +226,8 @@ print(length(Diffs_RandS))
 #Since the sample size is small, testing for normality
 ad.test(Diffs_RandS)
 #Population is normal, so we run a tTest
-results2 <- t.test(Diffs_RandS, alternative = "less")
-print(results2)
+results4 <- t.test(Diffs_RandS, alternative = "less")
+print(results4)
 ```
 
 ```         
@@ -259,8 +259,8 @@ print(length(Diffs_RandnS))
 #Since the sample size is small, testing for normality
 ad.test(Diffs_RandnS)
 #Population is normal, so we run a t-test
-results2 <- t.test(Diffs_RandnS, alternative="less")
-print(results2)
+results5 <- t.test(Diffs_RandnS, alternative="less")
+print(results5)
 ```
 
 ```         
@@ -395,6 +395,8 @@ There is a 5% probability of a Type 1 error.
 Based on the hypotheses you have tested and there results write a concluding paragraph or more about your findings:
 
 ```         
+This expirement features 92 participants, and aims to measure their heartrate before and after "treatment" (running in place). 35 participants received treatment, and 57 paricipants were used as a control group and did not receive treatment. Additionally, several characteristics were noted, such as their weight, gender, and if they smoked.
+Through hypothesis testing, numerous conclusions can be made the population of which this expirement tested. Firstly, we can assume that receiving treatment (running in place) will affect heart rate. Through running the appropriate tests, it was determined that running in place increased heart rate while not running in place did not increase heart rate. Additionally, the tests did not prove that the factor of smoking has an effect on heart rate before and after treatment, with both smokers and non-smokers experiencing an increased heart rate after running in place. Additionally, the tests state that there is an enormously high chance that male weight is different than male weight. Lastly, the study and hypothesis testing wanted to examine if smoking impacts male or females weight, in which is concluded that neither male nor female weight is affected by smoking. 
 ```
 
 **End Conclusion Assignment**
