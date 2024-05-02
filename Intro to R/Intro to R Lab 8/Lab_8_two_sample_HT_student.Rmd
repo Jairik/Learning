@@ -70,7 +70,7 @@ In this data set, there are 8 variables:
 create a data-frame and then create the following objects to answer each of the other assignments:
 
 |     Name      |                    Explanation of Name                    |
-|:-------------:|:---------------------------------------------------------:|
+|:-----------------:|:---------------------------------------------------:|
 |     Diffs     |                       Pulse1-Pulse2                       |
 |    Diffs_R    |          Pulse1 -- Pulse2 for Runners (Ran = 1)           |
 |  Diffs\_\~R   |        Pulse1 -- Pulse2 for non Runners (Ran = 2)         |
@@ -129,13 +129,13 @@ A researcher wants to test the hypothesis that the average pulse of the class wa
 
 ```{r}
 #We are comparing averages, so a t-test is to be used
-results1 <- t.test(data$Pulse1, data$Pulse2, paired = "true")
+results1 <- t.test(data$Pulse1, data$Pulse2, paired = "true", alternative = "less")
 print(results1)
 ```
 
 ```         
 Null Hypothesis- The average pulse of the class was equal the first and second time (mu1=mu2)
-Alternative Hypothesis- The average pulse of the class is not equal prior and after the expirement (mu1 != mu2)
+Alternative Hypothesis- The average pulse of the class before the expirement is less than the class's pulse after the expirement (mu1 < mu2)
 
 α = .05
 
@@ -145,7 +145,7 @@ If the p-value is less than α (.05) we reject the Null Hypothesis
 
 The p-value of this test is .000002023, which is significantly smaller than α (.05). Therefore, the Null Hypothesis is rejected.
 
-Since the Null Hypothesis is rejected, we can conclude that the two samples are not equal. Additionally, we can also conclude that the Alternative hypothesis is true, which is that the two pulses are not equal.
+Since the Null Hypothesis is rejected, we can conclude that the two samples are not equal. Additionally, we can also conclude that the Alternative hypothesis is true, so we know that the mean pulse after treatment is greater than the mean pulse prior to treatment.
 
 There is a 5% probability of a Type 1 error.
 ```
@@ -159,13 +159,28 @@ Now it probably makes sense to separate the class into two groups, the runners a
 A researcher now wants to look at the pulses of the running group before and after to conclude whether or not running in place increases mean heart rate. Conduct the appropriate test to test this hypothesis and clearly state your conclusion following the 8 steps described above.
 
 ```{r}
-
+#Getting the sample size
+print(length(Diffs_R))
+#We are comparing means, so a t-test is to be used
+results2 <- t.test(Diffs_R, alternative = "less")
+print(results2)
 ```
 
 ```         
-```
+Null Hypothesis: The mean pulses of indivuals receiving treatment is the same before and after
+ALternative Hypothesis: The mean pulses of individuals receiving treatment is greater after treatment compared to before treatment
 
-```         
+α = .05
+
+The sample size is 35 (large enough) and we are concerned about the means, so a one-sample t-test is best in this scenario
+
+If the p-value is less than α (.05) we reject the Null Hypothesis
+
+The p-value of this test is .000000005358, which is significantly smaller than α (.05). Therefore, the Null Hypothesis is rejected.
+
+Since the Null Hypothesis is rejected, we can conclude that subjects do not have the same pulse before and after treatment. Additionally, we can also conclude that the Alternative hypothesis is true, so we know that subjects have a higher pulse after treatment when compared to before treatment.
+
+There is a 5% probability of a Type 1 error.
 ```
 
 **End Assignment 3**
@@ -175,10 +190,28 @@ A researcher now wants to look at the pulses of the running group before and aft
 A researcher now wants to run the same hypothesis as before but with the non-runners to see if there is any difference in mean heart rate. Conduct the appropriate test to test this hypothesis and clearly state your conclusion following the 8 steps described above.
 
 ```{r}
-
+#Getting the sample size
+print(length(Diffs_nR))
+#We are comparing means and the population is large enough, so a t-test is to be used
+results2 <- t.test(Diffs_nR, alternative = "less")
+print(results2)
 ```
 
 ```         
+Null Hypothesis: The mean pulses of non-runners (people not receiving treatment) and is the same before and after treatment
+ALternative Hypothesis: The mean pulses of non-runners (people not receiving treatment) is greater after when compared to before
+
+α = .05
+
+The sample size is 57 and we are concerned about the means, so a one-sample t-test is best in this scenario
+
+If the p-value is less than α (.05) we reject the Null Hypothesis
+
+The p-value of this test is .5754, which is larger than α (.05). Therefore, the Null Hypothesis is not rejected.
+
+The Null Hypothesis is not rejected, so we can assume that the mean pulses for non-runners before and after treatment is the same.
+
+There is a 5% probability of a Type 1 error.
 ```
 
 **End Assignment 4**
@@ -188,10 +221,30 @@ A researcher now wants to run the same hypothesis as before but with the non-run
 Now among the runners there could be another factor that affects the average heart rate. This confounding factor could be smoking. Therefore the researcher wants to know does the mean heart rate of smokers increase after running in place? Conduct the appropriate test to test this hypothesis and clearly state your conclusion following the 8 steps described above. You may have a small sample size and it is non-normal you may have to use the Wilcoxon or Sign tests discussed in the previous lab.
 
 ```{r}
-
+#Getting the sample size
+print(length(Diffs_RandS))
+#Since the sample size is small, testing for normality
+ad.test(Diffs_RandS)
+#Population is normal, so we run a tTest
+results2 <- t.test(Diffs_RandS, alternative = "less")
+print(results2)
 ```
 
 ```         
+Null Hypothesis: The mean heart rates of runners (people who receive treatment) who smoke is the same before and after.
+ALternative Hypothesis: The mean pulses of non-runners (people not receiving treatment) who smoke is greater after when compared to before.
+
+α = .05
+
+The sample size is 92 and we are concerned about the means, so a one-sample t-test is best in this scenario
+
+If the p-value is less than α (.05) we reject the Null Hypothesis
+
+The p-value of this test is .0008227, which is smaller than α (.05). Therefore, the Null Hypothesis is rejected.
+
+The Null Hypothesis is rejected so we can assume that smoking subjects do not have the same heart rate before running when compared to after. Additionally, We can assume that Alternative Hypothesis that smokers have a higher heart rate after running when compared to before.
+
+There is a 5% probability of a Type 1 error.
 ```
 
 **End Assignment 5**
@@ -201,10 +254,30 @@ Now among the runners there could be another factor that affects the average hea
 Now to make a comparison the next hypothesis would be does running in place increase the mean heart rate of non-smokers? Conduct the appropriate test to test this hypothesis and clearly state your conclusion following the 8 steps described above.
 
 ```{r}
-
+#Getting the sample size
+print(length(Diffs_RandnS))
+#Since the sample size is small, testing for normality
+ad.test(Diffs_RandnS)
+#Population is normal, so we run a t-test
+results2 <- t.test(Diffs_RandnS, alternative="less")
+print(results2)
 ```
 
 ```         
+Null Hypothesis: The mean heart rates of runners (people who receive treatment) who do not smoke is the same before and after.
+ALternative Hypothesis: The mean pulses of non-runners (people not receiving treatment) who do not smoke is greater after when compared to before.
+
+α = .05
+
+The sample size is 23 and we are concerned about the means. Additionally, the data is normal. Therefore, a T-test is best in this scenario.
+
+If the p-value is less than α (.05) we reject the Null Hypothesis
+
+The p-value of this test is .000001113, which is smaller than α (.05). Therefore, the Null Hypothesis is rejected.
+
+The Null Hypothesis is rejected so we can assume that non-smoking subjects do not have the same heart rate before running when compared to after. Additionally, We can assume that Alternative Hypothesis that non-smokers have a higher heart rate after running when compared to before.
+
+There is a 5% probability of a Type 1 error.
 ```
 
 **End Assignment 6**
@@ -214,10 +287,31 @@ Now to make a comparison the next hypothesis would be does running in place incr
 Now a researcher is interested in the weights of the class. They want to determine whether the weights of males and females differ.Conduct the appropriate test to test this hypothesis and clearly state your conclusion following the 8 steps described above. ( if using a non-parametric test remember to state the conclusion in terms of means and not medians)
 
 ```{r}
-
+#Getting sizes for test determination
+print(length(Weight_M)) #Male 
+summary(Weight_M) #Validating p-value
+print(length(Weight_F)) #Female
+summary(Weight_F) #Validating
+#Both sizes are sufficiently large, so running a 2-sample t-test
+result7 <- t.test(Weight_M, Weight_F) #default alternative (not equal)
+print(result7)
 ```
 
 ```         
+Null Hypothesis: There is no difference in the weight of males and females
+ALternative Hypothesis: There is a difference in the weight of males and females
+
+α = .05
+
+The sample size for both samples are sufficiently large. Therefore, a T-test is best in this scenario.
+
+If the p-value is less than α (.05) we reject the Null Hypothesis
+
+The p-value of this test is esentially 0, which is obviously less than α (.05). Therefore, the Null Hypothesis is rejected.
+
+The Null Hypothesis is rejected so we can assume the Alternative Hypothesis, which is that the weight of males and females differ.
+
+There is a 5% probability of a Type 1 error.
 ```
 
 **End Assignment 7**
@@ -227,10 +321,34 @@ Now a researcher is interested in the weights of the class. They want to determi
 Going a little deeper into the data a researcher thinks that smoking might have an effect on weight. The researcher wants to test the hypothesis about whether the mean weight of males who smoke is different from males who do not smoke. Conduct the appropriate test to test this hypothesis and clearly state your conclusion following the 8 steps described above. ( if using a non-parametric test remember to state the conclusion in terms of means and not medians)
 
 ```{r}
-
+#Collecting basic statistics for validating results
+summary(Weight_M_S)
+print(length(Weight_M_S))
+summary(Weight_M_nS)
+print(length(Weight_M_nS))
+#Getting normality, since both samples are not sufficiently large
+ad.test(Weight_M_S)
+ad.test(Weight_M_nS)
+#Running appropriate test
+result8 <- t.test(Weight_M_S, Weight_M_nS) #Default Alternative
+print(result8)
 ```
 
 ```         
+Null Hypothesis: There is no difference in the weight of males who smoke and males who do not smoke
+ALternative Hypothesis: There is a difference in the weight of males who smoke and males who do not smoke
+
+α = .05
+
+The sample size of male smokers is not sufficiently large (20), however the distribution is norma. Additionally, the sample size of male non-smokers is sufficiently large. Therefore, a wilcox test is best to use.
+
+If the p-value is less than α (.05) we reject the Null Hypothesis
+
+The p-value of this test is .1834, which is greater than α (.05). Therefore, the Null Hypothesis is not rejected.
+
+The Null Hypothesis is not rejected, so we can assume that smoking does not affect male weight.
+
+There is a 5% probability of a Type 1 error.
 ```
 
 **End Assignment 8**
@@ -240,11 +358,34 @@ Going a little deeper into the data a researcher thinks that smoking might have 
 The last hypothesis that the researcher want to test is whether the mean weight of females who smoke is different from females who do not smoke. Conduct the appropriate test to test this hypothesis and clearly state your conclusion following the 8 steps described above. ( if using a non-parametric test remember to state the conclusion in terms of means and not medians)
 
 ```{r}
-
-
+#Collecting basic statistics for validating results
+summary(Weight_F_S)
+print(length(Weight_F_S))
+summary(Weight_F_nS)
+print(length(Weight_F_nS))
+#Getting normality, since both samples are not sufficiently large
+ad.test(Weight_F_S)
+ad.test(Weight_F_nS)
+#Running appropriate test
+result9 <- t.test(Weight_F_S, Weight_F_nS) #Default Alternative
+print(result9)
 ```
 
 ```         
+Null Hypothesis: There is no difference in the weight of females who smoke and males who do not smoke
+ALternative Hypothesis: There is a difference in the weight of females who smoke and males who do not smoke
+
+α = .05
+
+Neither sample size is sufficiently large (8 & 27). However, both samples are normal, so a t-test is appropriate in this scenario.
+
+If the p-value is less than α (.05) we reject the Null Hypothesis
+
+The p-value of this test is .5281, which is greater than α (.05). Therefore, the Null Hypothesis is not rejected.
+
+The Null Hypothesis is not rejected, so we can assume that smoking does not affect female weight.
+
+There is a 5% probability of a Type 1 error.
 ```
 
 **End Assignment 9**
