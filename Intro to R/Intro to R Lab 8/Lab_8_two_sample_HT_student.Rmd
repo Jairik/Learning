@@ -70,7 +70,7 @@ In this data set, there are 8 variables:
 create a data-frame and then create the following objects to answer each of the other assignments:
 
 |     Name      |                    Explanation of Name                    |
-|:-----------------:|:---------------------------------------------------:|
+|:-------------:|:---------------------------------------------------------:|
 |     Diffs     |                       Pulse1-Pulse2                       |
 |    Diffs_R    |          Pulse1 -- Pulse2 for Runners (Ran = 1)           |
 |  Diffs\_\~R   |        Pulse1 -- Pulse2 for non Runners (Ran = 2)         |

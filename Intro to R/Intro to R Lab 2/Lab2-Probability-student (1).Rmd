@@ -137,7 +137,7 @@ ggplot(SexStat,aes(x="",y=SexProportion,fill=Sex))+
 Now, let's obtain the cross-tabulation for Sex and Activity. A British professor Paul Williamson create a powerful function to easily obtain the cross-tabulation. See the following code:
 
 ```{r}
-#COMMENT: The face that you can pull from a link like that is so cool
+#COMMENT: The fact that you can pull from a link like that is so cool
 source("http://pcwww.liv.ac.uk/~william/R/crosstab.r")
 crosstab(data2, row.vars = "Activity", col.vars = "Sex", type = "f")
 
