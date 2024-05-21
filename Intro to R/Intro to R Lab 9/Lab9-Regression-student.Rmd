@@ -50,7 +50,7 @@ and are central in analyzing the simple linear regression model.   Analyzing t
 
 A straightforward way to begin addressing the assumptions for simple linear regression is to scatter plot the ordered pairs and display the line $\widehat{y}=\widehat{\beta_0}+\widehat{\beta_1}x$ on the same graph. If the scatter plot of the data points seems to scatter non randomly about the line $\widehat{y}=\widehat{\beta_0}+\widehat{\beta_1}x$, then it's likely that one or more of the assumptions for simple linear regression are not satisfied and something else possibly should be done. If the scatter plot looks reasonable then we move forward and do a more thorough analysis of the ordered pairs.
 
-In today's lab, we will first work will simulated data to understand the elementary processes of simple linear regression, then we will work on real word data, and finally we will consider some special examples about regression.
+In today's lab, we will first work with simulated data to understand the elementary processes of simple linear regression, then we will work on real word data, and finally we will consider some special examples about regression.
 
 # Part I: Working with Simulated Data
 
@@ -87,7 +87,7 @@ Up to this point, we obtain the 21 sample pairs of $(x_i,y_i)$. Now, let's forge
 
 ```{r}
 plot(y1_1~x1)
-title(main="Scatter plot - Model 1 - Your Name")
+title(main="Scatter plot - Model 1 - JJ McCauley")
 ```
 
 Does the above scatter plot shows an approximately linear pattern? If yes, we can go to the next sub-step
@@ -95,7 +95,9 @@ Does the above scatter plot shows an approximately linear pattern? If yes, we ca
 **Step 2.2**: Simple Linear Regression Analysis
 
 ```{r}
-mod1 <- lm(y1_1~x1)
+mod1 <- lm(y1_1~x1) #Creating the Linear Regression Model
+
+#Outputting the results
 summary(mod1)
 anova(mod1)
 
@@ -112,6 +114,8 @@ abline(mod1)
 ```
 
 What is your observation?
+
+The regression line appears to act as a line of best fit for the data, appearing to fairly closely represent the true data.
 
 ## Assignment 1.1
 
