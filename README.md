@@ -1,3 +1,8 @@
-# Misc. Schoolwork
+# Learning Exercises
 
-Some of the more interesting schoolwork that I have done.
+Some of the interesting learning exercises that I have done
+
+Currently Includes:
+* Android Programming
+* Some Java Design Patterns (also w/ Refactoring)
+* R Programming
