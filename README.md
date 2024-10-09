@@ -8,3 +8,4 @@ Currently Includes:
 * R Programming
 * Playing around with Tensorflow NN
 * Python 15-puzzle Game w/ GUI
+* Lex Parser
