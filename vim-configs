@@ -55,3 +55,8 @@ inoremap <C-H> <C-W>
 call plug#begin('~/.vim/plugged')
 Plug 'jiangmiao/auto-pairs'
 call plug#end()
+
+
+" Disable auto-comment thing when going onto next line
+set formatoptions-=cro
+autocmd FileType * setlocal formatoptions-=cro
