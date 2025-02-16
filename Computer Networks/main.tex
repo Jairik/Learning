@@ -24,7 +24,7 @@
 
 Chapter 1's Problems: 6,10,11,12,20,31
 
-% Question R6
+% Labeling sections with question number (adjusting counter)
 \setcounter{section}{5}
 \section{Available residential access technologies in Salisbury}
 
@@ -152,7 +152,6 @@ Today, the most popular wireless internet access technologies are Wi-Fi (WLAN), 
     \caption{Wireless Internet Access Technologies Comparison}
     \label{tab:my_label}
 \end{table}
-
 In summary: \begin{itemize}
     \item \textbf{Wi-Fi} is best used for local, high-speed wireless internet
     \item \textbf{4G/5G Celluar Networks} are best for mobility
@@ -162,5 +161,23 @@ In summary: \begin{itemize}
 Each wireless internet access technology has various different use cases, however Wi-Fi is commonly the most popular and widespread used in non-remote areas for fast internet connectivity.
 
 \section{Determining end-to-end delay for packet of Length L}
+Assuming that there is exactly one packet switch between the sending and receiving host and that the switch uses a \textbf{store-and-forward approach}, the total end-to-end delay for a packet of length L would be as follows:
+\[
+d_{\text{total}} = \frac{L}{R_1} + \frac{L}{R_2}
+\]
+where \( R_1 \) and \( R_2 \) represents the transmission rates between the host and the switch, and the switch to the host, respectively.   
+Since the store-and-forward approach delay happens twice in a two-link network (the switch must fully receive the packet before forwarding it), the total delay formula are the two delay formulas for each switch added together.
+
+\section{Advantages of Circuit Switching Techniques}
+\subsection{Circuit-Switching vs. Packet-Switching Networks}
+In circuit switching, a dedicated communication path is established prior to transmission, remaining open for the entire session and reserving bandwidth for the duration. In contrast, Packet-Switching does not set up a dedicated path, with each packet potentially taking different routes and only using resources as needed. Although Packet-Switching consumes less resources, Circuit-Switching has significantly less latency, no packet loss, and ensures consistent performance (not subject to performance impacts from congestion).
+\subsection{TDM vs FDM in Circuit-Switched Networks}
+Both TDM (Time-Division Multiplexing) and FDM (Frequency-Division Multiplexing) are used in circuit-switching networks, aiming to allow multiple users to share a network. FDM allows for users to transmit data in alternating turns, while FDM assigns each user a separate channel. Unlike FDM, TDM is advantageous in that it dynamically allocates bandwidth and TDM avoids interference. 
+\setcounter{section}{19}
+\section{Describing packet process}
+If end system A wants to send a large file to end system B, end system A will firstly split the file into smaller chunks, then add headers to each split with important information, then send each packet off individually to reach end system B. When each of these packets arrives to a router, the router will look at the destination IP address to determine the best path to forward the packet. Packet switching is analogous to driving from one city to another in the sense that there is no dedicated road to drive on (no fixed path for each packet), the driver will ask for directions and reroute at each step (router determines where to send each packet based on network conditions), dynamic paths are based on conditions (such as a congested link), and different packets may take different routes to arrive at a destination, although they may arrive in a different order.
+
+\setcounter{section}{30}
+\section{}
 
 \end{document}
