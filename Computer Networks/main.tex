@@ -1,5 +1,6 @@
 \documentclass{article}
 \usepackage{hyperref}
+\usepackage{float}
 
 % Language setting
 % Replace `english' with e.g. `spanish' to change the document language
@@ -58,7 +59,108 @@ Xfinity, a very popular provider in Salisbury, has numerous different plans with
 \subsection{5G Home Internet: T-Mobile}
 T-Mobile offers various plans with different metrics, per \href{https://www.t-mobile.com/home-internet/policies/internet-service/network-speed-performance-metricsper}{T-Mobile's Metrics}.
 \begin{enumerate}
-    \item 
+    \item "Rely" Plan \begin{enumerate}
+        \item Downstream Rate: 87-318 Mbps
+        \item Upstream Rate: 14-56 Mbps
+        \item Monthly Price: Around \$50
+    \end{enumerate}
+    \item "Amplified" Plan  \begin{enumerate}
+        \item Downstream Rate: 133-415 Mbps
+        \item Upstream Rate: 12-55 Mbps
+        \item Monthly Price: Around \$60
+    \end{enumerate}
+    \item "All-in" Plan \begin{enumerate}
+        \item Downstream Rate: 133-415 Mbps
+        \item Upstream Rate:12-55 Mbps
+        \item Monthly Price: Around \$70
+    \end{enumerate}
 \end{enumerate}
+In contrast to the wide-spread availability of Xfinity's cable internet, 5G home internet has significantly less availability, which is important to note.
+
+\subsection{Fiber Optic: Glofiber}
+In addition to other providers, Glofiber has various plans with different speeds and prices.
+\begin{enumerate}
+    \item \$70/month Plan \begin{enumerate}
+        \item Downstream Rate: 600 Mbps
+        \item Upstream Rate: ?
+    \end{enumerate}
+    \item \$85/month Plan \begin{enumerate}
+        \item Downstream Rate: 1200 Mbps
+        \item Upstream Rate: ?
+    \end{enumerate}
+    \item \$140/month Plan \begin{enumerate}
+        \item Downstream Rate: 2400 Mbps
+        \item Upstream Rate: ?
+    \end{enumerate}
+    \item \$290/month Plan \begin{enumerate}
+        \item Downstream Rate: 5000 Mbps
+        \item Upstream Rate: ?
+    \end{enumerate}
+\end{enumerate}
+
+\subsection{Other Providers}
+In addition to the more well-known providers, there are various other providers in Salisbury.
+\begin{itemize}
+    \item Fixed Wireless Internet: Bloosurf \begin{enumerate}
+        \item Downstream Rate: Up to 100 Mbps
+        \item Upstream Rate: ?
+        \item Monthly Price: Not specified
+    \end{enumerate}
+    \item Satellite Internet: HughesNet \begin{enumerate}
+        \item Downstream Rate: Up to 100 Mbps
+        \item Upstream Rate: ?
+        \item Monthly Price: Starts at \$49.99
+    \end{enumerate}
+    \item Satellite Internet: Starlink \begin{itemize}
+        \item Downstrate Rate: Up to 220 Mbps
+        \item Upstream Rate: ?
+        \item Monthly Price: Starting at \$120
+    \end{itemize}
+\end{itemize}
+
+\setcounter{section}{9}
+\section{Comparing popular wireless internet access technologies}
+Today, the most popular wireless internet access technologies are Wi-Fi (WLAN), Celluar Networks, Fixed Wireless Access (FWA), and Satellite Internet.
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|p{3.5cm}|p{3.5cm}|p{3.5cm}|p{3.5cm}|}
+        \hline
+        \textbf{Wi-Fi} & \textbf{Cellular Networks} & \textbf{Fixed Wireless} & \textbf{Satellite} \\
+        \hline 
+        A short-range wireless technology that allows multiple devices to connect to the internet through a router connected to a broadband service.
+        & Cellular Internet provides mobile broadband through cell towers, allowing connection anywhere with coverage
+        & Fixed wireless delivers broadband to homes and businesses using radio signals from nearby towers.
+        & Satellite internet transmits data between a satellite dish and orbiting satellites \\
+        \hline
+        Very fast speeds, up to 9.6 Gbps
+        & Moderately fast speeds, around 10-3000 Mbps
+        & Slower speeds, typically around 25-1000 Mbps
+        & Slow speeds, around 25-250 Mbps \\
+        \hline
+        Availability Limited to router range
+        & Wide/Expanding coverage
+        & Limited Availability (requires nearby tower)
+        & Available almost anywhere \\
+        \hline
+        Best for home, office, and public spaces
+        & Best for mobile internet, rural areas, and home internet (5G)
+        & Best for rural homes and businesses
+        & Best for remote and very rural areas where access is limited \\
+        \hline
+    \end{tabular}
+    \caption{Wireless Internet Access Technologies Comparison}
+    \label{tab:my_label}
+\end{table}
+
+In summary: \begin{itemize}
+    \item \textbf{Wi-Fi} is best used for local, high-speed wireless internet
+    \item \textbf{4G/5G Celluar Networks} are best for mobility
+    \item \textbf{Fixed Wireless} offers a strong broadband alternative in areas without fiber or cable capabilities
+    \item \textbf{Satellite} is a last-resort option for those who don't have access to any other networks
+\end{itemize}
+Each wireless internet access technology has various different use cases, however Wi-Fi is commonly the most popular and widespread used in non-remote areas for fast internet connectivity.
+
+\section{Determining end-to-end delay for packet of Length L}
 
 \end{document}
