@@ -1,0 +1,99 @@
+<!-- Displays different hackathon events, with a search feature -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hackathon Schedule</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 20px;
+            text-align: center;
+        }
+        table {
+            width: 90%;
+            max-width: 800px;
+            margin: auto;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #333;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #ffdd57;
+            cursor: pointer;
+        }
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        input {
+            padding: 10px;
+            width: 80%;
+            max-width: 400px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="search-container">
+        <input type="text" id="searchInput" onkeyup="filterTable()" placeholder="Search for an event...">
+    </div>
+
+    <!-- DEV NOTE: JUST CHANGE THIS STUFF TO UPDATE -->
+    <table id="scheduleTable">
+        <tr>
+            <th>Time</th>
+            <th>Event</th>
+        </tr>
+        <tr><td>8:00 AM</td><td>Doors Open</td></tr>
+        <tr><td>8:50 AM</td><td>Opening Commencement</td></tr>
+        <tr><td>9:20 AM</td><td>Team Formation & Preparation</td></tr>
+        <tr><td>9:30 AM</td><td><b>HACKING BEGINS</b></td></tr>
+        <tr><td>9:30 AM-9:30 PM</td><td><i>Workshops, Meals, Swag Aquisition</i></td></tr>
+        <tr><td>9:30 PM</td><td><b>HACKING ENDS</b></td></tr>
+        <tr><td>9:35 PM</td><td>Devpost Submissions Due</td></tr>
+        <tr><td>9:50 PM</td><td>Judging Begins</td></tr>
+        <tr><td>10:30 PM</td><td>Judging Concludes</td></tr>
+        <tr><td>10:45 PM</td><td>Winners Announced</td></tr>
+        <tr><td>11:05 PM</td><td>Closing Ceremony Ends</td></tr>
+    </table>
+
+    <script>
+        function filterTable() {
+            let input = document.getElementById("searchInput").value.toUpperCase();
+            let table = document.getElementById("scheduleTable");
+            let tr = table.getElementsByTagName("tr");
+
+            for (let i = 1; i < tr.length; i++) {
+                let td = tr[i].getElementsByTagName("td")[1]; 
+                if (td) {
+                    let textValue = td.textContent || td.innerText;
+                    tr[i].style.display = textValue.toUpperCase().includes(input) ? "" : "none";
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>

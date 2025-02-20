@@ -1,0 +1,57 @@
+<!-- Countdown to specified date -->
+ <!-- DEVELOPER NOTE: JUST CHANGE THE new Date() line in the JS script with updated date! -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Asap:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Asap', sans-serif;
+            text-align: center;
+            background-color: #f8f8f8;
+        }
+        #countdown {
+            font-size: 5rem;
+            font-weight: 500;
+            color: #b00000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 120px; /* Fixed height */
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div id="countdown">Loading...</div>
+
+    <script>
+        function updateCountdown() {
+            var eventDate = new Date("October 25, 2025 09:30:00").getTime();
+            var now = new Date().getTime();
+            var timeLeft = eventDate - now;
+
+            if (timeLeft < 0) {
+                document.getElementById("countdown").innerHTML = "The event has started!";
+                return;
+            }
+
+            var days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown").innerHTML = 
+                days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+
+            setTimeout(updateCountdown, 1000);
+        }
+        updateCountdown();
+    </script>
+</body>
+</html>
