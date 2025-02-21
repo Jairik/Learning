@@ -1,0 +1,68 @@
+<!-- Scrolling categories/themes since the container didn't want to work -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrolling Awards - Slow & ASAP Font</title>
+    <link href="https://fonts.googleapis.com/css2?family=Asap:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: transparent; /* Fully transparent background */
+            font-family: 'Asap', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .marquee-container {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            padding: 10px 0; /* Adds a little space without forcing height */
+        }
+        .marquee-content {
+            display: flex;
+            gap: 100px; /* Space between each item */
+            font-size: 24px;
+            font-weight: 600; /* Makes the text a bit bolder */
+            animation: marquee 25s linear infinite; /* Slower animation */
+            min-width: 200%; /* Ensures smooth looping */
+        }
+        .marquee-content span {
+            display: inline-block;
+            padding: 0 30px; /* Extra spacing around each award */
+        }
+        @keyframes marquee {
+            from {
+                transform: translateX(0%);
+            }
+            to {
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="marquee-container">
+        <div class="marquee-content">
+            <span>Best Overall</span>
+            <span>Best Educational</span>
+            <span>Best Use of AI</span>
+            <span>Best Cybersecurity</span>
+            <span>Best Design</span>
+            <span>TBD</span>
+
+            <!-- Duplicate the same content for smooth infinite effect -->
+            <span>Best Overall</span>
+            <span>Best Educational</span>
+            <span>Best Use of AI</span>
+            <span>Best Cybersecurity</span>
+            <span>Best Design</span>
+            <span>TBD</span>
+        </div>
+    </div>
+
+</body>
+</html>
