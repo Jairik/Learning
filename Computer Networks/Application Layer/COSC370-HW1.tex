@@ -1,0 +1,64 @@
+\documentclass{article}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{verbatim}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+\usepackage[english]{babel}
+
+% Set page size and margins
+% Replace `letterpaper' with `a4paper' for UK/EU standard size
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+% Title, Author, Problems/Date, ect (Stupid 'fix' but whatever)
+\title{Computer Networks - Homework 2}
+\author{JJ McCauley \\ 2/17/25}
+\date{Chapter 1's Problems: 3,7,8,9,22}
+
+\begin{document}
+\maketitle
+
+
+% Labeling sections with question number (adjusting counter)
+\setcounter{section}{2}
+% QUESTION 6
+\section{Transport and Application-layer protocols}
+In order for the HTTP client to retrieve the IP address from a URL, it must use the \textbf{DNS} protocol on the application layer to translate the URL to a valid IP. These DNS queries are then sent through the UDP in the transport layer. Once the IP address is acquired, the client is then able to establish a HTTP connection through TCP to receive the document.
+
+% QUESTION 7
+\setcounter{section}{6}
+\section{Calculating total time with RTT}
+In order to calculate the total time, we must add \textbf{DNS Lookup Time} and \textbf{TCP Connection Time}. \\
+In order to find total DNS delay, we must consider that visits for \textit{n} DNS servers can be considered as $\text{RTT}_{\text{1}} + \text{RTT}_{\text{2}} + ... + \text{RTT}_{\text{n}}$. Therefore:
+\[
+\text{Total DNS Delay} = \text{RTT}_{\text{1}} + \text{RTT}_{\text{2}} + ... + \text{RTT}_{\text{n}}
+\]
+Then, we must consider the TCP Connection Establishment. Since $\text{RTT}_{\text{0}}$ represents the time it takes for the client to send the HTTP request, as well as the time it takes for the client to receive the request, we can note the delay in this phase as:
+\[
+2 * \text{RTT}_{\text{0}}
+\]
+Therefore, the total overall time can be denoted as the following:
+\[
+\textbf{Total Time} = (\text{RTT}_{\text{1}} + \text{RTT}_{\text{2}} + ... + \text{RTT}_{\text{n}}) + 2 * \text{RTT}_{\text{0}}
+\]
+
+% Question 8
+\section{HTTP Transmission Time with Multiple Objects}
+\subsection{Non-persistent HTTP with no parallel TCP connections}
+With non-persistent HTTP and no TCP connections, then each object would need to be fetched over a separate TCP connection. Therefore, since there are 8 objects, then the total time would be $8 * \text{time for one object}$ .
+Since a connection must be made to send and receive the HTML file, with each transfer taking one RTT, then we know that each object will require two RTTs for each object. Therefore, \textbf{the total time for this scenario would be $2 * 8 = 16 \text{ RTTs}$}.
+\subsection{Non-persistent HTTP with 6 parallel connections}
+Since this approach uses non-persistent HTTP, then 2 connections will still be needed to fetch an HTML object (one for client to request, one for client to receive). Since \textbf{6} objects can be fetched at once, and there are 8 objects, we know that it must take two rounds of fetching to retrieve all files (first fetch for the first six objects, second fetch for the remaining two). Since each fetch will take two RTTs (request \& receive object), and we must account for the initial TCP connection, then \textbf{the total time for this scenario would be $2 \text{ RTTs}+ 2 \text{ RTTs} + 2 \text{ RTTs} = 6 \textbf{ RTTs}$}, which accounts for the two object fetches and the initial connection. This is significantly more efficient than the previous approach.
+\subsection{Persistent HTTP}
+When using persistent HTTP, then all HTML objects can be transferred at once. Therefore, it will take 1 RTT for HTML files (transfer all 8 in one go), and will require an RTT for the client requesting and receiving, respectively. Therefore, \textbf{the total time for this scenario would be $1 \text{ RTTs}+ 1 \text{ RTTs} + 1 \text{ RTTs} = 3 \textbf{ RTTs}$}. This approach is the most efficient by far, when compared to the previous approaches ($3 < 6 < 16$).
+
+% Question 9
+\section{Calculating Total Average Response Time}
+
+\end{document}

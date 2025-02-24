@@ -1,0 +1,71 @@
+<!-- Simple sliding/fading logo animation for homepage -->
+ <!-- ENDED UP NOT USING, but could be beneficial in the future -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SU Hackathon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Asap:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Styles */
+        .su-hackathon-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .su-logo {
+            width: 300px;
+            opacity: 0;
+            transform: translateX(-100%);
+            transition: transform 1.2s ease-in-out, opacity 1.2s ease-in-out;
+        }
+
+        .su-text {
+            font-family: 'Asap', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            color: black;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: transform 1.2s ease-in-out, opacity 1.2s ease-in-out;
+            margin-left: 20px;
+            text-align: center;
+            max-width: 500px;
+        }
+
+        /* Animation Trigger */
+        .su-visible {
+            opacity: 1 !important;
+            transform: translateX(0) !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="su-hackathon-container">
+        <img src="https://hub.salisbury.edu/hackathon/files/2025/02/SU-Hacks-LOGO-3.png" alt="SU Hacks Logo" class="logo" id="logo">
+        <div class="su-text" id="su-text">
+            Celebrate Salisbury University's 100th Anniversary at the first annual SU 12-hour Hackathon!
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            setTimeout(function() {
+                document.getElementById('su-logo').classList.add('su-visible');
+                document.getElementById('su-text').classList.add('su-visible');
+            }, 300); // Small delay for a smooth appearance
+        });
+    </script>
+
+</body>
+</html>
