@@ -60,5 +60,70 @@ When using persistent HTTP, then all HTML objects can be transferred at once. Th
 
 % Question 9
 \section{Calculating Total Average Response Time}
+Firstly, we know that the average object size is 1,000,000 bits, the request rate is 16 requests/sec, and the internet delay is 3 seconds. 
+\subsection{Total Average Response Time without Cache}
+We know that the average access delay is models as
+\[
+\frac{\Delta}{1 - \Delta \beta}
+\]
+where $\Delta = \frac{\text{object size}}{\text{access link rate}} = \frac{1,000,000 \text{ bits}}{100 * 10^6 \text{bps}} = .01 \text{ sec}$ and $\beta = .01 \text{ sec} * 16 \text{ requests per second} = .16$. \\
+Plugging this into the equation, we get:
+\[
+\frac{.01}{1 - .16} = \frac{.01}{.84} = .011905 \text{ seconds}
+\]
+Then, we can use the known internet delay of 3 seconds to derive the following answer:
+\[
+{T_\textbf{avg, no cache}} = \text{Average Access Delay} + \text{Internet Delay} = .011905 \text{ sec} + 3 \text{ sec} = 3.011905 \textbf{ seconds}
+\]
+\subsection{Total Average Response Time with Cache}
+Now with cache with a miss rate of 0.4, we can recalculate the total average response time knowing that only the misses need to be considered when calculating $\beta$. To achieve this new number, we can multiply the request rate (16 requests per second) by the miss rate (.4), such that \
+\[
+\beta = 16 \text{ requests per second} * 0.4 \text{ miss rate} = 6.4 \text{ requests/second}. 
+\]
+Then, we can multiply this by $\Delta$ such that $6.4 \text{ requests per second} * .01 = .064$. Now, we can plug this into the Access Delay formula as follows:
+\[
+\text{Access Delay} = \frac{.01}{1 - .064} = \frac{.01}{.936} = .01068 \text{ seconds}
+\]
+Then, we can calculate the total delay when a cache hit occurs (knowing internet delay) through the following calculation:
+\[
+T_{\text{cache miss}} = .01068 \text{ sec}+ 3 \text{ sec} = 3.01068 \text{ sec}
+\]
+Know that we know the response time for cache misses, we can calculate the \textbf{total average time when caching} by finding the weighted sum via the following formula:
+\[
+T_{\textbf{avg, cache}} = (.6) (0 \text{sec}) + (.4) (T_{\text{cache miss}}) = 0 + .4 * 3.01068 = 1.2043 \text{ seconds}
+\]
+Note that cached responses will require 0 seconds for a hit, so it can essentially be disregarded. As we can see, when compared to the previous response, Caching can be significantly faster and reduce the total average response time immensely.
+
+% Question 22
+\setcounter{section}{21}
+\section{Minimum Distribution Time: Client-Server \& P2P}
+For this question, we know that we need to distribute a file of $F = 20 \text{ Gbits}$ to $N$ peers, where $N = 10, 100, 1000$. Additionally, we know it has an upload rate of $u = 300 \text{ Kbps}, 700 \text{ Kbps}, 2 \text{ Mbps}$, and an download rate of $d = 2 \text{ Mbps}$. \\
+In order to find Client-Server distribution $T_{\text{cs}}$ and P2P distribution $T_{\text{p2p}}$, we will use the following equations:
+\[
+T_{\text{cs}} = \text{max}\{\frac{F}{u}, \frac{F}{d}, \frac{NF}{u} \} 
+\]
+\[
+T_{\text{p2p}} = \text{max}\{\frac{F}{u}, \frac{F}{d}, \frac{NF}{u + Nu} \} 
+\]
+Prior to computing, we must firstly convert the units into bits or bits/sec, which will be used for the equation. For example, we must convert $F$ such that $F = 20 * 10^9 \text{ bits}$. \\
+Now, we can utilize these equations for each of the $N$ and $u$ cases in order to find the total computation time for both Client Server and P2P.
+\subsection{Client-Server Distribution Results}
+In the client-server architecture, only the server's upload rate $u_{\text{s}}$ is to be considered when performing the calculations, with $u_{\text{s}} = 30 * 10^6 \text{ bits/second}$. Therefore, we can derive the following table using N:
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    N & $\frac{F}{d}$ & $\frac{F}{d}$ & $\frac{F}{d}$ & $T_{\text{cs}}$ (seconds) \\ \hline
+    10 & 667 & 10,000 & 6,667 & \textbf{10,000} \\ \hline
+    100 & 667 & 10,000 & 66,667 & \textbf{66,667} \\ \hline
+    1000 & 667 & 10,000 & 666,667 & \textbf{666,667} \\ \hline
+  \end{tabular}
+  \caption{Client Server Distribution Results}
+\end{table}
+
+where $T_{\text{cs}}$ is derived from the maximum of the previous columns. We can then use these values in the final chart.
+
+% --- CHART WILL GO HERE --- %
+
 
 \end{document}
