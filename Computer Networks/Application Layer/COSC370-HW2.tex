@@ -2,6 +2,7 @@
 \usepackage{hyperref}
 \usepackage{float}
 \usepackage{verbatim}
+\usepackage{placeins}    % for \FloatBarrier
 
 % Language setting
 % Replace `english' with e.g. `spanish' to change the document language
@@ -109,11 +110,12 @@ Prior to computing, we must firstly convert the units into bits or bits/sec, whi
 Now, we can utilize these equations for each of the $N$ and $u$ cases in order to find the total computation time for both Client Server and P2P.
 \subsection{Client-Server Distribution Results}
 In the client-server architecture, only the server's upload rate $u_{\text{s}}$ is to be considered when performing the calculations, with $u_{\text{s}} = 30 * 10^6 \text{ bits/second}$. Therefore, we can derive the following table using N:
+
 \begin{table}[htbp]
   \centering
   \begin{tabular}{|c|c|c|c|c|}
     \hline
-    N & $\frac{F}{d}$ & $\frac{F}{d}$ & $\frac{F}{d}$ & $T_{\text{cs}}$ (seconds) \\ \hline
+    N & $\frac{F}{d}$ & $\frac{F}{d}$ & $\frac{NF}{u}$ & $T_{\text{cs}}$ (seconds) \\ \hline
     10 & 667 & 10,000 & 6,667 & \textbf{10,000} \\ \hline
     100 & 667 & 10,000 & 66,667 & \textbf{66,667} \\ \hline
     1000 & 667 & 10,000 & 666,667 & \textbf{666,667} \\ \hline
@@ -123,7 +125,69 @@ In the client-server architecture, only the server's upload rate $u_{\text{s}}$ 
 
 where $T_{\text{cs}}$ is derived from the maximum of the previous columns. We can then use these values in the final chart.
 
-% --- CHART WILL GO HERE --- %
+% --- Client Server Distribution Results --- %
+\begin{center}
+  \includegraphics[width=.8\textwidth]{Client-Server-Distribution-Graph.png}
+\end{center}
+
+\subsection{P2P Distribution}
+In the P2P architecture, the upload rates $u$ must be considered. When plugging in the given numbers (with units adjusted) with each $N$ and $u$, and finding the max of the three fractions (as shown in the equation above), the following tables are produced:
+
+% Table for u = 300 * 10^3 bps
+\begin{table}[H]
+  \centering
+  \setlength{\tabcolsep}{8pt} % Adjust horizontal spacing
+  \begin{tabular}{|c|c|}
+    \hline
+    \(N\) & \(T_{\text{p2p}}\) (s) \\ \hline
+    10    & \textbf{10,000}      \\ \hline
+    100   & \textbf{33,333}      \\ \hline
+    1000  & \textbf{60,606}      \\ \hline
+  \end{tabular}
+  \caption{P2P Distribution Results for \(u = 300 \times 10^3\) bps}
+  \label{tab:p2p_300bps}
+\end{table}
+
+% Table for u = 700 bps
+\begin{table}[H]
+  \centering
+  \setlength{\tabcolsep}{8pt}
+  \begin{tabular}{|c|c|}
+    \hline
+    \(N\) & \(T_{\text{p2p}}\) (s) \\ \hline
+    10    & \textbf{10,000}      \\ \hline
+    100   & \textbf{20,000}      \\ \hline
+    1000  & \textbf{27,397}      \\ \hline
+  \end{tabular}
+  \caption{P2P Distribution Results for \(u = 700\) bps}
+  \label{tab:p2p_700bps}
+\end{table}
+
+% Table for u = 2000 bps
+\begin{table}[H]
+  \centering
+  \setlength{\tabcolsep}{8pt}
+  \begin{tabular}{|c|c|}
+    \hline
+    \(N\) & \(T_{\text{p2p}}\) (s) \\ \hline
+    10    & \textbf{10,000}      \\ \hline
+    100   & \textbf{10,000}      \\ \hline
+    1000  & \textbf{10,000}      \\ \hline
+  \end{tabular}
+  \caption{P2P Distribution Results for \(u = 2000\) bps}
+  \label{tab:p2p_2000bps}
+\end{table}
+
+% Graph at the bottom of the page
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{P2P-Distribution-Graph.png}
+  \caption{P2P Distribution Graph}
+  \label{fig:p2p_graph}
+\end{figure}
+
+As we can see, the P2P architecture significantly outperforms the Client-Server model. The speed of the P2P architecture increases as N peers increases, and decreases as the upload rate increases.
+
 
 
 \end{document}
