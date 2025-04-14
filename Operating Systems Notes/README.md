@@ -1,7 +1,5 @@
-# Operating System Notes
-## Contents:
-- Short Summaries
-- ___
+# Operating System Notes (Short Summaries of Notes in Class)
 
-### Short Summaries Progress
-Lecture Notes 1, 2
+## Progress
+
+- Notes up to slide 16  
