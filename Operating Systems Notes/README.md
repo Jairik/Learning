@@ -2,4 +2,4 @@
 
 ## Progress
 
-- Notes up to slide 16  
+- Notes up to slide 19  
