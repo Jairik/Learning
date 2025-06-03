@@ -1,6 +1,5 @@
 // Mock database to return the data
 
-// In script.js
 const studentGrades = {
   labels: ['Math', 'Science', 'English', 'History', 'Art'],
   datasets: [
@@ -37,7 +36,7 @@ function getWeeks(){
 }
 
 // Exporting the functions
-module.exports = {
+export default {
     getGrades,
     getWeeks
 };

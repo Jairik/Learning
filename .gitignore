@@ -1,3 +1,10 @@
 
 Intro to R/Intro to R Lab 6/Lab6-CI.html
 desktop.ini
+*/package-lock.json
+*/node_modules
+*/.DS_Store
+*/.vscode
+*/.idea
+*/.git
+/Learning-APIs/express-js/node_modules

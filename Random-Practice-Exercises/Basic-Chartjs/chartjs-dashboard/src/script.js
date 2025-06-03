@@ -5,12 +5,13 @@
 */
 
 // Require the proper modules
-const mockDB = require('./mock-db.js');
-import Chart from 'chart.js/auto';
+import mockDB from './mock-db.js';
+import Chart from 'chart.js/auto';  // Load all chart.js components
 
 // Making a bar chart for Grades by subject
 function visualizeGradeBySubject(){
-    const data = mockDB.getGrades();  // Get the data from pretend db
+    const grades = mockDB.getGrades();  // Get the data from pretend db
+    const studentA = grades.datasets.find(item => item.label == 'Student A');  // Getting specific data from student
 
     // Create the chart
     new Chart(
@@ -18,35 +19,35 @@ function visualizeGradeBySubject(){
         {
         type: 'bar',
         data: {
-            labels: data.map(row => row.label),
+            labels: grades.labels,
             datasets: [{
                 label: "Grades per subject",
-                data: data.map(row => row.grade)
+                data: studentA.data
             }]
         }
     });
 }
+visualizeGradeBySubject();
 
 // Line chart for weekly performance for student a
 function visualizeWeeklyPerformance(){
-    const data = mockDB.getWeeks();
-
+    const weekData = mockDB.getWeeks();
+    const mathProgressData = weekData.datasets.find(item => item.label == 'Math Progress')
+0
     new Chart(
         document.getElementById('lineChart'),
         {
             type: 'line',
             data: {
-                labels: data.map(row => row.labels),
+                labels: weekData.labels,
                 datasets: [
                     {
-                        label: 'Student A weekly performance',
-                        data: data.map(row => row.data)
+                        label: 'Weekly performance',
+                        data: mathProgressData.data
                     }
                 ]
             }
         }
     );
 }
-
-visualizeGradeBySubject();
 visualizeWeeklyPerformance();
