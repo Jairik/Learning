@@ -51,3 +51,26 @@ function visualizeWeeklyPerformance(){
     );
 }
 visualizeWeeklyPerformance();
+
+// Doughnut Chart of Student A's grade distribution
+function visualizeGradeDistribution(){
+    const gradeData = mockDB.getGrades();
+    const studentA = gradeData.datasets.find(item => item.label == 'Student A');
+
+    new Chart(
+        document.getElementById('doughnutChart'),
+        {
+            type: 'doughnut',
+            data: {
+                labels: gradeData.labels,
+                datasets: [
+                    {
+                        label: 'Grade Distribution of Student A',
+                        data: studentA.data
+                    }
+                ]
+            }
+        }
+    );
+}
+visualizeGradeDistribution();
