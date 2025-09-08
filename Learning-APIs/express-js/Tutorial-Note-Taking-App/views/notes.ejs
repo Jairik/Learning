@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>All Notes</title>
+</head>
+<body>
+    
+    <h1>Notes</h1>
+
+    <% notes.forEach(note => { %>
+        <li>
+            <h2><%= note.title %></h2>
+            <p><%= note.contents %></p>
+            <p><%= notes.timestamp %></p>
+            <a href="/notes/<%=note.id%>">View More</a>
+        </li>
+    <% }) %>
+
+</body>
+</html>

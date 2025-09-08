@@ -49,3 +49,7 @@ Create a line chart showing Student A’s progress in Math over 6 weeks.
 
 3) Doughnut Chart - 
 Create a doughnut chart showing the distribution of Student A’s grades across subjects.
+
+## Bundler
+
+For this exercise, I will be using Vite as the bundler
