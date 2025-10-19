@@ -30,8 +30,8 @@ app.get("/notes/:id", (req, res) => {
         res.status(404).render("note404.ejs");
         return;
     }
-    res.render("note.ejs", {
-        note
+    res.render("singleNote.ejs", {
+        note, 
     });
 })
 

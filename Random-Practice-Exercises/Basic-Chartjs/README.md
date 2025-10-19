@@ -41,15 +41,16 @@ const weekData = {
 ```
 
 ## Tasks
-1) Bar Chart - 
+
+1) Bar Chart -
 Create a bar chart comparing Student A and Student B’s grades in different subjects.
 
-2) Line Chart - 
+2) Line Chart -
 Create a line chart showing Student A’s progress in Math over 6 weeks.
 
-3) Doughnut Chart - 
+3) Doughnut Chart -
 Create a doughnut chart showing the distribution of Student A’s grades across subjects.
 
 ## Bundler
 
-For this exercise, I will be using Vite as the bundler
+For this exercise, I will be using Vite as the bundler.
