@@ -1,0 +1,78 @@
+---
+title: "Quarto Tutorial: Basic Chart.js"
+format:
+  html:
+    theme: cosmo
+    toc: true
+execute:
+    echo: true
+---
+
+# What this is
+
+Quick primer on working with a `.qmd` file: YAML up top, Markdown prose, and executable code cells. Render with `quarto preview testing.qmd` or `quarto render testing.qmd` to produce HTML in the same folder.
+
+
+# Anatomy of a .qmd
+
+````markdown
+---
+title: "My Doc"
+format: html
+---
+
+Some prose.
+
+```{python}
+print("hello from python")
+```
+````
+
+# Running a small code cell
+
+Below is a simple Python chunk. It will run when you render.
+
+```{python}
+nums = list(range(5))
+total = sum(nums)
+nums, total
+```
+
+# Embedding Chart.js (no build tools)
+
+HTML in a chunk is passed through as-is, so you can include a `<canvas>` and a script that pulls Chart.js from a CDN. On render, the chart will appear in the output page.
+
+```{html}
+<canvas id="myChart" height="120"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+	const ctx = document.getElementById('myChart');
+	const chart = new Chart(ctx, {
+		type: 'bar',
+		data: {
+			labels: ['A', 'B', 'C', 'D'],
+			datasets: [{
+				label: 'Demo Values',
+				data: [3, 7, 4, 6],
+				backgroundColor: ['#4c6ef5', '#15aabf', '#e64980', '#fab005']
+			}]
+		},
+		options: {
+			responsive: true,
+			plugins: {
+				legend: { position: 'bottom' },
+				title: { display: true, text: 'Chart.js inside Quarto' }
+			},
+			scales: {
+				y: { beginAtZero: true }
+			}
+		}
+	});
+</script>
+```
+
+# Notes
+
+- Use `echo: true/false` in YAML or per-chunk to toggle code visibility.
+- Add `warning: false` or `message: false` in chunk options to silence outputs when needed.
+- Switching formats is just `format: pdf` or `format: revealjs` in the YAML when you have the right tooling installed.
